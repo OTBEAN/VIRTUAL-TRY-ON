@@ -1,0 +1,864 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AI Virtual Try-On</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      .error-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ffebee;
+        border: 1px solid #ef9a9a;
+        padding: 15px;
+        border-radius: 5px;
+        max-width: 300px;
+        z-index: 1000;
+      }
+
+      .error-message p {
+        margin: 5px 0;
+      }
+      .outfit-layer {
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+        mix-blend-mode: multiply;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .main-container {
+        display: flex;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .image-section {
+        flex: 1;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .clothing-section {
+        width: 350px;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        max-height: 80vh;
+      }
+      .upload-area {
+        border: 2px dashed #ccc;
+        padding: 30px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: border-color 0.3s;
+      }
+      .upload-area:hover {
+        border-color: #4caf50;
+      }
+      #imageInput {
+        display: none;
+      }
+      #tryonContainer {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        border: 1px solid #ddd;
+        margin: 20px 0;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #uploadedImage,
+      #resultImage {
+        max-width: 100%;
+        max-height: 100%;
+        display: none;
+      }
+      .clothing-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .clothing-item {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .clothing-item:hover {
+        border-color: #4caf50;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .clothing-item.selected {
+        border-color: #4caf50;
+        background: #f0fff0;
+      }
+      .clothing-item img {
+        width: 100%;
+        height: 120px;
+        object-fit: contain;
+      }
+      .clothing-item p {
+        margin: 8px 0 0;
+        text-align: center;
+        font-size: 14px;
+      }
+      .delete-item {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .clothing-item:hover .delete-item {
+        opacity: 1;
+      }
+      button {
+        padding: 12px 20px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #45a049;
+      }
+      button:disabled {
+        background: #cccccc;
+        cursor: not-allowed;
+      }
+      .adjustment-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+      }
+      .adjust-button {
+        padding: 10px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .adjust-button:hover {
+        background: #2980b9;
+      }
+      .loading {
+        display: none;
+        text-align: center;
+        padding: 20px;
+      }
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid #3498db;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .admin-controls {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+      .admin-controls h3 {
+        color: #e74c3c;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="debug-section">
+    <h3>Debug View</h3>
+    <button id="debugBtn">Show Pose Detection</button>
+    <img id="debugView" style="display:none; max-width:100%; margin-top:10px;">
+    </div>
+    <div class="header">
+      <h1>AI Virtual Try-On System</h1>
+      <p>Upload your photo and try on different outfits</p>
+    </div>
+  
+
+    <div class="main-container">
+      <div class="image-section">
+        <div class="upload-area" id="uploadArea">
+          <p>Click to upload your photo</p>
+          <input type="file" id="imageInput" accept="image/*" />
+        </div>
+        <!-- Add this error display section at the top of your body -->
+<div id="errorMessage" class="error-message" style="display: none;">
+    <p id="errorText"></p>
+    <button onclick="document.getElementById('errorMessage').style.display = 'none'">Close</button>
+</div>
+
+<!-- Add this to your combined.html for better pose visualization -->
+<div class="pose-visualization">
+    <h3>Pose Detection</h3>
+    <button id="showPoseBtn">Show Detected Pose</button>
+    <div id="poseCanvasContainer" style="display: none; margin-top: 10px;">
+        <canvas id="poseCanvas" width="400" height="500"></canvas>
+    </div>
+</div>
+
+        <div id="tryonContainer">
+          <img id="uploadedImage" class="base-image" />
+          <img id="resultImage" />
+        </div>
+
+        <button id="tryButton" disabled>Try Selected Outfit</button>
+
+        <div class="adjustment-buttons">
+          <button class="adjust-button" data-action="move-up">Move Up</button>
+          <button class="adjust-button" data-action="move-down">
+            Move Down
+          </button>
+          <button class="adjust-button" data-action="move-left">
+            Move Left
+          </button>
+          <button class="adjust-button" data-action="move-right">
+            Move Right
+          </button>
+          <button class="adjust-button" data-action="scale-up">Zoom In</button>
+          <button class="adjust-button" data-action="scale-down">
+            Zoom Out
+          </button>
+        </div>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Applying outfit...</p>
+        </div>
+      </div>
+
+      <div class="clothing-section">
+        <h3>Available Outfits</h3>
+
+        <div class="clothing-grid" id="clothingGrid">
+          {% for item in clothes %}
+          <div class="clothing-item" data-id="{{ item.id }}">
+            <button class="delete-item" data-id="{{ item.id }}">×</button>
+            <img
+              src="{{ item.image.url }}"
+              alt="{{ item.name }}"
+              onerror="this.src='{% static 'detector/images/default_clothing.png' %}'"
+            />
+            <p>{{ item.name }}</p>
+          </div>
+          {% empty %}
+          <p>No clothing items available</p>
+          {% endfor %}
+        </div>
+
+        <div class="admin-controls">
+          <h3>Upload New Outfit</h3>
+          <input type="file" id="clothingImageInput" style="display: none" />
+          <button
+            onclick="document.getElementById('clothingImageInput').click()"
+          >
+            Select Outfit Image
+          </button>
+          <input
+            type="text"
+            id="clothingName"
+            placeholder="Outfit name"
+            style="width: 100%; padding: 8px; margin: 10px 0"
+          />
+          <button id="uploadButton">Upload Outfit</button>
+          <div id="uploadStatus" style="margin-top: 10px"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global variables
+      let selectedClothing = null;
+      let uploadedImage = null;
+      let currentTransform = {
+        x: 0,
+        y: 0,
+        scale: 1,
+      };
+
+      // DOM elements
+      const uploadArea = document.getElementById("uploadArea");
+      const imageInput = document.getElementById("imageInput");
+      const uploadedImageEl = document.getElementById("uploadedImage");
+      const resultImage = document.getElementById("resultImage");
+      const tryButton = document.getElementById("tryButton");
+      const loading = document.getElementById("loading");
+      const clothingGrid = document.getElementById("clothingGrid");
+      const clothingImageInput = document.getElementById("clothingImageInput");
+      const clothingName = document.getElementById("clothingName");
+      const uploadButton = document.getElementById("uploadButton");
+      const uploadStatus = document.getElementById("uploadStatus");
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", () => {
+        testServer();
+        // Handle user image upload
+        uploadArea.addEventListener("click", () => imageInput.click());
+
+        imageInput.addEventListener("change", (e) => {
+          console.log("File selected:", e.target.files[0]);
+          const file = e.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            uploadedImage = event.target.result;
+            uploadedImageEl.src = uploadedImage;
+            uploadedImageEl.style.display = "block";
+            resultImage.style.display = "none";
+
+            // Reset transformations
+            currentTransform = { x: 0, y: 0, scale: 1 };
+
+            // Enable try button if clothing is selected
+            if (selectedClothing) {
+              tryButton.disabled = false;
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+
+        document.getElementById('debugBtn').addEventListener('click', async () => {
+    const file = document.getElementById('imageInput').files[0];
+    if (!file) {
+        alert('Please upload an image first');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch('/debug-tryon/', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            document.getElementById('debugView').src = url;
+            document.getElementById('debugView').style.display = 'block';
+        } else {
+            throw new Error('Debug failed');
+        }
+    } catch (error) {
+        console.error('Debug error:', error);
+        alert('Debug failed - check console');
+    }
+});
+
+// Add pose visualization functionality
+document.getElementById('showPoseBtn').addEventListener('click', async function() {
+    const file = document.getElementById('imageInput').files[0];
+    if (!file) {
+        alert('Please upload an image first');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch('/debug-pose/', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            const poseData = await response.json();
+            visualizePose(poseData);
+        } else {
+            throw new Error('Pose detection failed');
+        }
+    } catch (error) {
+        console.error('Pose visualization error:', error);
+        alert('Pose detection failed');
+    }
+});
+
+function visualizePose(poseData) {
+    const canvas = document.getElementById('poseCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('poseCanvasContainer');
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    if (poseData.landmarks) {
+        // Draw landmarks
+        const landmarks = poseData.landmarks;
+        const scale = Math.min(canvas.width / 400, canvas.height / 500);
+        
+        ctx.fillStyle = 'red';
+        for (const [name, point] of Object.entries(landmarks)) {
+            if (point && point.x && point.y) {
+                ctx.beginPath();
+                ctx.arc(point.x * scale, point.y * scale, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.fillText(name, point.x * scale + 5, point.y * scale);
+            }
+        }
+        
+        // Draw connections
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 2;
+        
+        // Shoulders
+        if (landmarks.left_shoulder && landmarks.right_shoulder) {
+            ctx.beginPath();
+            ctx.moveTo(landmarks.left_shoulder.x * scale, landmarks.left_shoulder.y * scale);
+            ctx.lineTo(landmarks.right_shoulder.x * scale, landmarks.right_shoulder.y * scale);
+            ctx.stroke();
+        }
+        
+        // Torso
+        if (landmarks.left_shoulder && landmarks.left_hip) {
+            ctx.beginPath();
+            ctx.moveTo(landmarks.left_shoulder.x * scale, landmarks.left_shoulder.y * scale);
+            ctx.lineTo(landmarks.left_hip.x * scale, landmarks.left_hip.y * scale);
+            ctx.stroke();
+        }
+        
+        if (landmarks.right_shoulder && landmarks.right_hip) {
+            ctx.beginPath();
+            ctx.moveTo(landmarks.right_shoulder.x * scale, landmarks.right_shoulder.y * scale);
+            ctx.lineTo(landmarks.right_hip.x * scale, landmarks.right_hip.y * scale);
+            ctx.stroke();
+        }
+        
+        container.style.display = 'block';
+    } else {
+        alert('No pose landmarks detected');
+    }
+}
+
+        // Clothing selection
+        clothingGrid.addEventListener("click", (e) => {
+          const item = e.target.closest(".clothing-item");
+          const deleteBtn = e.target.closest(".delete-item");
+
+          if (deleteBtn) {
+            e.stopPropagation();
+            deleteClothingItem(deleteBtn.dataset.id);
+            return;
+          }
+
+          if (!item) return;
+
+          // Remove selection from all items
+          document.querySelectorAll(".clothing-item").forEach((i) => {
+            i.classList.remove("selected");
+          });
+
+          // Select current item
+          item.classList.add("selected");
+          selectedClothing = item.dataset.id;
+
+          // Enable try button if image is uploaded
+          if (uploadedImage) {
+            tryButton.disabled = false;
+          }
+        });
+
+        // In your tryButton click handler:
+        // Update your tryButton click handler
+        // In your tryButton click handler:
+tryButton.addEventListener("click", async () => {
+    console.log("[DEBUG] Try-on initiated");
+
+    try {
+        // Validate inputs
+        if (!selectedClothing) {
+            throw new Error("Please select an outfit first");
+        }
+
+        const bodyImageFile = imageInput.files[0];
+        if (!bodyImageFile) {
+            throw new Error("Please upload your photo first");
+        }
+
+        // Show loading state
+        loading.style.display = "block";
+        tryButton.disabled = true;
+
+        // Prepare form data
+        const formData = new FormData();
+        formData.append("image", bodyImageFile);
+        formData.append("clothing_id", selectedClothing);
+
+        // Send request
+        const response = await fetch("/static-tryon/", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": getCSRFToken(),
+            },
+        });
+
+        // Handle response
+        if (!response.ok) {
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch (e) {
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
+            }
+            throw new Error(errorData.error || "Try-on failed");
+        }
+
+        const data = await response.json();
+        if (!data.result_image) {
+            throw new Error("Server didn't return a result image");
+        }
+
+        // Display result
+        resultImage.src = data.result_image + "?t=" + Date.now();
+        resultImage.style.display = "block";
+        uploadedImageEl.style.display = "none";
+        
+    } catch (error) {
+        console.error("[ERROR] Try-on failed:", error);
+        // Show error message to user
+        document.getElementById("errorText").textContent = error.message;
+        document.getElementById("errorMessage").style.display = "block";
+    } finally {
+        loading.style.display = "none";
+        tryButton.disabled = false;
+    }
+});
+
+        async function testServer() {
+          try {
+            const response = await fetch("/test-models/");
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("Server test response:", data);
+            if (data.status !== "success") {
+              console.error(
+                "Server test failed:",
+                data.message || "Unknown error"
+              );
+            }
+          } catch (error) {
+            console.error("Server test failed:", error);
+            // Show user-friendly message
+            alert(
+              "Server connection test failed. Please check:\n1. Server is running\n2. Correct endpoint URL\n3. Console for details"
+            );
+          }
+        }
+        // Outfit adjustment buttons
+        document.querySelectorAll(".adjust-button").forEach((button) => {
+          button.addEventListener("click", () => {
+            if (
+              !resultImage.style.display ||
+              resultImage.style.display === "none"
+            )
+              return;
+
+            const action = button.dataset.action;
+            switch (action) {
+              case "move-up":
+                currentTransform.y -= 10;
+                break;
+              case "move-down":
+                currentTransform.y += 10;
+                break;
+              case "move-left":
+                currentTransform.x -= 10;
+                break;
+              case "move-right":
+                currentTransform.x += 10;
+                break;
+              case "scale-up":
+                currentTransform.scale *= 1.1;
+                break;
+              case "scale-down":
+                currentTransform.scale *= 0.9;
+                break;
+            }
+
+            resultImage.style.transform = `
+                        translate(${currentTransform.x}px, ${currentTransform.y}px)
+                        scale(${currentTransform.scale})
+                    `;
+          });
+        });
+
+        // Upload new outfit
+        uploadButton.addEventListener("click", async () => {
+          const file = clothingImageInput.files[0];
+          if (!file) {
+            showUploadStatus("Please select an image", false);
+            return;
+          }
+
+          const name = clothingName.value.trim();
+          if (!name) {
+            showUploadStatus("Please enter a name", false);
+            return;
+          }
+
+          uploadButton.disabled = true;
+          uploadButton.textContent = "Uploading...";
+
+          try {
+            const formData = new FormData();
+            formData.append("image", file);
+            formData.append("name", name);
+
+            const response = await fetch("/upload-clothing/", {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCSRFToken(),
+              },
+              body: formData,
+            });
+
+            const data = await response.json();
+
+            if (data.status === "success") {
+              showUploadStatus("Outfit uploaded successfully!", true);
+              addClothingToGrid(data.clothing);
+              clothingImageInput.value = "";
+              clothingName.value = "";
+            } else {
+              throw new Error(data.error || "Upload failed");
+            }
+          } catch (error) {
+            showUploadStatus(error.message, false);
+          } finally {
+            uploadButton.disabled = false;
+            uploadButton.textContent = "Upload Outfit";
+          }
+        });
+      });
+      async function handleTryOn() {
+        const tryButton = document.getElementById("tryButton");
+        const loadingIndicator = document.getElementById("loading");
+        const statusDisplay = document.getElementById("statusDisplay");
+
+        try {
+          // Validate inputs
+          const bodyImageFile = document.getElementById("imageInput").files[0];
+          const clothingId = document.querySelector(".clothing-item.selected")
+            ?.dataset.id;
+
+          if (!bodyImageFile) {
+            throw new Error("Please upload a body image first");
+          }
+          if (!clothingId) {
+            throw new Error("Please select an outfit first");
+          }
+
+          // Prepare UI
+          tryButton.disabled = true;
+          loadingIndicator.style.display = "block";
+          statusDisplay.textContent = "Processing...";
+          statusDisplay.style.color = "blue";
+
+          // Prepare form data
+          const formData = new FormData();
+          formData.append("image", bodyImageFile);
+          formData.append("clothing_id", clothingId);
+
+          // Send request
+          const response = await fetch("/static-tryon/", {
+            method: "POST",
+            body: formData,
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+            },
+          });
+
+          // Handle response
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.error || `Server error: ${response.status}`
+            );
+          }
+
+          const data = await response.json();
+          if (data.status !== "success") {
+            throw new Error(data.error || "Try-on failed");
+          }
+
+          // Display result
+          document.getElementById("resultImage").src = data.result_image;
+          statusDisplay.textContent = "Success!";
+          statusDisplay.style.color = "green";
+        } catch (error) {
+          console.error("Try-on error:", error);
+          statusDisplay.textContent = `Error: ${error.message}`;
+          statusDisplay.style.color = "red";
+
+          // Show detailed error for debugging
+          const debugInfo = document.createElement("div");
+          debugInfo.textContent = `Technical details: ${error.message}`;
+          debugInfo.style.fontSize = "0.8em";
+          debugInfo.style.color = "gray";
+          statusDisplay.appendChild(debugInfo);
+        } finally {
+          tryButton.disabled = false;
+          loadingIndicator.style.display = "none";
+        }
+      }
+
+      function validateImage(file, maxSizeMB = 5) {
+        if (!file.type.match("image.*")) {
+          throw new Error("Only image files are allowed");
+        }
+        if (file.size > maxSizeMB * 1024 * 1024) {
+          throw new Error(`File too large (max ${maxSizeMB}MB)`);
+        }
+        return true;
+      }
+
+      // Delete clothing item
+      async function deleteClothingItem(itemId) {
+        if (!confirm("Are you sure you want to delete this outfit?")) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/delete-clothing/${itemId}/`, {
+            method: "DELETE",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.status === "success") {
+            // Remove from UI
+            const item = document.querySelector(
+              `.clothing-item[data-id="${itemId}"]`
+            );
+            if (item) {
+              item.remove();
+            }
+
+            // If no items left, show message
+            if (document.querySelectorAll(".clothing-item").length === 0) {
+              clothingGrid.innerHTML = "<p>No clothing items available</p>";
+            }
+
+            // If deleted item was selected, reset selection
+            if (selectedClothing === itemId) {
+              selectedClothing = null;
+              tryButton.disabled = true;
+            }
+
+            showUploadStatus("Outfit deleted successfully", true);
+          } else {
+            throw new Error(data.error || "Deletion failed");
+          }
+        } catch (error) {
+          showUploadStatus(error.message, false);
+        }
+      }
+
+      function addClothingToGrid(clothing) {
+        const grid = document.getElementById("clothingGrid");
+        const noItemsMsg = grid.querySelector("p");
+
+        if (
+          noItemsMsg &&
+          noItemsMsg.textContent === "No clothing items available"
+        ) {
+          grid.removeChild(noItemsMsg);
+        }
+
+        const item = document.createElement("div");
+        item.className = "clothing-item";
+        item.dataset.id = clothing.id;
+        item.innerHTML = `
+                <button class="delete-item" data-id="${clothing.id}">×</button>
+                <img src="${clothing.image_url}" alt="${clothing.name}">
+                <p>${clothing.name}</p>
+            `;
+
+        item.addEventListener("click", function () {
+          document.querySelectorAll(".clothing-item").forEach((i) => {
+            i.classList.remove("selected");
+          });
+          this.classList.add("selected");
+          selectedClothing = this.dataset.id;
+
+          if (uploadedImage) {
+            tryButton.disabled = false;
+          }
+        });
+
+        grid.prepend(item);
+      }
+
+      function showUploadStatus(message, isSuccess) {
+        uploadStatus.textContent = message;
+        uploadStatus.style.color = isSuccess ? "green" : "red";
+        setTimeout(() => {
+          uploadStatus.textContent = "";
+        }, 5000);
+      }
+
+      function getCSRFToken() {
+        const cookie = document.cookie
+          .split(";")
+          .find((c) => c.trim().startsWith("csrftoken="));
+        return cookie ? cookie.split("=")[1] : "";
+      }
+    </script>
+  </body>
+</html>

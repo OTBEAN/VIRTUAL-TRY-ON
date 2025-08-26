@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-08-12T02:19:37.208449",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "25"
+    ],
+    "debug": [
+      "true"
+    ]
+  },
+  "image_file": {
+    "name": "00891_00.jpg",
+    "size": 105359,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "25",
+  "clothing": {
+    "name": "asfsad",
+    "category": "top",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothing\\20250805_023715_11028_00.jpg"
+  },
+  "clothing_type": "top",
+  "measurements": {
+    "shoulder_width": 224,
+    "hip_width": 160,
+    "shoulder_height": 314,
+    "shoulder_center": 403,
+    "hip_height": 712,
+    "hip_center": 360,
+    "torso_height": 415
+  },
+  "segmentation_mask_size": "640x480",
+  "segmentation_mask_pixels": 105464,
+  "result_url": "/media/tryon_results\\result_20250812_021938_5298.jpg",
+  "success": true
+}

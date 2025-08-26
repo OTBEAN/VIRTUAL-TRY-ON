@@ -1,0 +1,29 @@
+{
+  "error": "Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()",
+  "input_shapes": {
+    "person": [
+      1024,
+      768,
+      3
+    ],
+    "clothing": [
+      552,
+      414,
+      4
+    ]
+  },
+  "position": {
+    "x_start": null,
+    "y_start": null,
+    "type": "top"
+  },
+  "measurements": {
+    "shoulder_width": 319,
+    "hip_width": 221,
+    "shoulder_height": 340,
+    "shoulder_center": 410,
+    "hip_height": 817,
+    "hip_center": 390,
+    "torso_height": 485
+  }
+}

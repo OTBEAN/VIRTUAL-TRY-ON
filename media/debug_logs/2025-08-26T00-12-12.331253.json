@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-08-26T00:12:12.331253",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "27"
+    ],
+    "debug": [
+      "true"
+    ]
+  },
+  "image_file": {
+    "name": "07445_00.jpg",
+    "size": 127558,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "27",
+  "clothing": {
+    "name": "wewe",
+    "category": "top",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothing\\20250806_012839_11791_00.jpg"
+  },
+  "clothing_type": "top",
+  "measurements": {
+    "shoulder_width": 238,
+    "hip_width": 162,
+    "shoulder_height": 325,
+    "shoulder_center": 412,
+    "hip_height": 677,
+    "hip_center": 405,
+    "torso_height": 351
+  },
+  "segmentation_mask_size": "640x480",
+  "segmentation_mask_pixels": 124714,
+  "result_url": "/media/tryon_results\\result_20250826_001220_7767.jpg",
+  "success": true
+}

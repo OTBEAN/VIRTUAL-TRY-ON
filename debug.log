@@ -1,0 +1,1368 @@
+Loading YOLO models...
+YOLO models loaded successfully
+Loading YOLO models...
+YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /favicon.ico
+Received try-on request
+Processing image of size: (1024, 768, 3)
+Calculated body measurements
+Blending images - person: (1024, 768, 3), clothing: (441, 331, 4)
+Enhanced blending failed: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 208, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Bad Request: /static-tryon/
+Received try-on request
+Processing image of size: (1024, 768, 3)
+Calculated body measurements
+Blending images - person: (1024, 768, 3), clothing: (441, 331, 4)
+Enhanced blending failed: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 208, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Bad Request: /static-tryon/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Received try-on request
+Processing image of size: (1024, 768, 3)
+Calculated body measurements
+Blending images - person: (1024, 768, 3), clothing: (441, 331, 4)
+Enhanced blending failed: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 208, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (774,526) (1024,768) 
+Bad Request: /static-tryon/
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /favicon.ico
+Received try-on request
+Processing image of size: (1024, 768, 3)
+Calculated body measurements
+Blending images - person: (1024, 768, 3), clothing: (384, 288, 4)
+Enhanced blending failed: operands could not be broadcast together with shapes (777,505) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 208, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (777,505) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (777,505) (1024,768) 
+Bad Request: /static-tryon/
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 301, 'hip_width': 198, 'torso_height': 460, 'full_height': 903, 'shoulder_height': 317, 'shoulder_center': 407, 'hip_height': 771, 'hip_center': 384}
+Clothing resized from (799, 900, 4) to (210, 237, 4)
+Blending images - person: (1024, 768, 3), clothing: (210, 237, 4)
+Clothing position: x=266, y=750
+Enhanced blending failed: operands could not be broadcast together with shapes (274,502) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (274,502) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (274,502) (1024,768) 
+Bad Request: /static-tryon/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Method Not Allowed: /static-tryon/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 251, 'hip_width': 159, 'torso_height': 405, 'full_height': 875, 'shoulder_height': 334, 'shoulder_center': 424, 'hip_height': 735, 'hip_center': 415}
+Clothing resized from (1024, 768, 4) to (401, 301, 4)
+Blending images - person: (1024, 768, 3), clothing: (401, 301, 4)
+Clothing position: x=274, y=254
+Enhanced blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Bad Request: /static-tryon/
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 251, 'hip_width': 159, 'torso_height': 405, 'full_height': 875, 'shoulder_height': 334, 'shoulder_center': 424, 'hip_height': 735, 'hip_center': 415}
+Clothing resized from (1024, 768, 4) to (401, 301, 4)
+Blending images - person: (1024, 768, 3), clothing: (401, 301, 4)
+Clothing position: x=274, y=254
+Enhanced blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Bad Request: /static-tryon/
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 251, 'hip_width': 159, 'torso_height': 405, 'full_height': 875, 'shoulder_height': 334, 'shoulder_center': 424, 'hip_height': 735, 'hip_center': 415}
+Clothing resized from (1024, 768, 4) to (401, 301, 4)
+Blending images - person: (1024, 768, 3), clothing: (401, 301, 4)
+Clothing position: x=274, y=254
+Enhanced blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Bad Request: /static-tryon/
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 251, 'hip_width': 159, 'torso_height': 405, 'full_height': 875, 'shoulder_height': 334, 'shoulder_center': 424, 'hip_height': 735, 'hip_center': 415}
+Clothing resized from (1024, 768, 4) to (401, 301, 4)
+Blending images - person: (1024, 768, 3), clothing: (401, 301, 4)
+Clothing position: x=274, y=254
+Enhanced blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (770,494) (1024,768) 
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 264, 'hip_width': 170, 'torso_height': 434, 'full_height': 838, 'shoulder_height': 354, 'shoulder_center': 391, 'hip_height': 775, 'hip_center': 333}
+Clothing resized from (799, 900, 4) to (181, 204, 4)
+Blending images - person: (1024, 768, 3), clothing: (181, 204, 4)
+Clothing position: x=231, y=757
+Enhanced blending failed: operands could not be broadcast together with shapes (267,537) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (267,537) (1024,768) 
+Blending failed: operands could not be broadcast together with shapes (267,537) (1024,768) 
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 417, in static_tryon
+    result_img = tryon_system.blend_images(
+        person_img,
+    ...<3 lines>...
+        segmentation_mask
+    )
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 255, in blend_images
+    result[y_start:y_start+clothing_img.shape[0],
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         x_start:x_start+clothing_img.shape[1], c] * (1 - alpha)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+ValueError: operands could not be broadcast together with shapes (267,537) (1024,768) 
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 301, 'hip_width': 198, 'torso_height': 460, 'full_height': 903, 'shoulder_height': 317, 'shoulder_center': 407, 'hip_height': 771, 'hip_center': 384}
+Clothing resized from (1024, 768, 4) to (481, 361, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 443, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 301, 'hip_width': 198, 'torso_height': 460, 'full_height': 903, 'shoulder_height': 317, 'shoulder_center': 407, 'hip_height': 771, 'hip_center': 384}
+Clothing resized from (1024, 768, 4) to (481, 361, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 443, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 251, 'hip_width': 159, 'torso_height': 405, 'full_height': 875, 'shoulder_height': 334, 'shoulder_center': 424, 'hip_height': 735, 'hip_center': 415}
+Clothing resized from (1024, 768, 4) to (401, 301, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 443, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 301, 'hip_width': 198, 'torso_height': 460, 'full_height': 903, 'shoulder_height': 317, 'shoulder_center': 407, 'hip_height': 771, 'hip_center': 384}
+Clothing resized from (1024, 768, 4) to (481, 361, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 445, in static_tryon
+    clothing_img = tryon_system.process_clothing(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 264, 'hip_width': 170, 'torso_height': 434, 'full_height': 838, 'shoulder_height': 354, 'shoulder_center': 391, 'hip_height': 775, 'hip_center': 333}
+Clothing resized from (1024, 768, 4) to (422, 316, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 561, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 301, 'hip_width': 198, 'torso_height': 460, 'full_height': 903, 'shoulder_height': 317, 'shoulder_center': 407, 'hip_height': 771, 'hip_center': 384}
+Clothing resized from (799, 900, 4) to (210, 237, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 595, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 301, 'hip_width': 198, 'torso_height': 460, 'full_height': 903, 'shoulder_height': 317, 'shoulder_center': 407, 'hip_height': 771, 'hip_center': 384}
+Clothing resized from (799, 900, 4) to (210, 237, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 595, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 251, 'hip_width': 159, 'torso_height': 405, 'full_height': 875, 'shoulder_height': 334, 'shoulder_center': 424, 'hip_height': 735, 'hip_center': 415}
+Clothing resized from (1024, 768, 4) to (401, 301, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 630, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Body measurements: {'shoulder_width': 262, 'hip_width': 171, 'torso_height': 374, 'full_height': 868, 'shoulder_height': 305, 'shoulder_center': 407, 'hip_height': 676, 'hip_center': 406}
+Clothing resized from (799, 900, 4) to (182, 205, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 630, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (457, 343, 4)
+Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 681, in static_tryon
+    result_img = tryon_system.blend_images(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'blend_images'
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (169, 190, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033146_5907.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (435, 326, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033222_7815.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (435, 326, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033229_8521.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (435, 326, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033232_8222.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (169, 190, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033237_3620.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (435, 326, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033248_7517.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033611_3557.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033714_2119.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033722_7749.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (182, 205, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033726_4620.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033747_8279.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033751_5344.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (182, 205, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_033753_9683.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_034056_8098.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (273, 205, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_034408_2744.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (273, 205, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_034435_1390.jpg
+Not Found: /debug-tryon/
+Not Found: /debug-tryon/
+Not Found: /debug-tryon/
+Not Found: /debug-tryon/
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (279, 210, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_040321_5655.jpg
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (435, 326, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_040901_9968.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (254, 190, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_040911_6335.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (169, 190, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_040919_8045.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (435, 326, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_040922_5343.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (210, 237, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_044001_6811.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (316, 237, 4)
+Starting blending process
+Adjusted clothing height to fit
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_044238_9349.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (521, 391, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_044242_4387.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (521, 391, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_044255_6522.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (521, 391, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250811_044258_5044.jpg
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Bad Request: /debug-tryon/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (176, 199, 4)
+Starting blending process
+Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 396, in blend_images
+    position = self.calculate_garment_position(keypoints, clothing_type, clothing_img)
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 160, in calculate_garment_position
+    if left_hip and right_hip:
+       ^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 416, in blend_images
+    raise ValueError(f"Position calculation failed: {str(e)}")
+ValueError: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Blending failed: Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 396, in blend_images
+    position = self.calculate_garment_position(keypoints, clothing_type, clothing_img)
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 160, in calculate_garment_position
+    if left_hip and right_hip:
+       ^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 416, in blend_images
+    raise ValueError(f"Position calculation failed: {str(e)}")
+ValueError: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 760, in static_tryon
+    result_img = tryon_system.blend_images(
+        person_img,
+    ...<3 lines>...
+        segmentation_mask
+    )
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 510, in blend_images
+    raise ValueError(f"Blending failed: {str(e)}")
+ValueError: Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Bad Request: /static-tryon/
+Not Found: /test-models/
+Processing image of size: (1024, 768, 3)
+Bad Request: /debug-tryon/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 396, in blend_images
+    position = self.calculate_garment_position(keypoints, clothing_type, clothing_img)
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 146, in calculate_garment_position
+    if left_shoulder and right_shoulder:
+       ^^^^^^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 416, in blend_images
+    raise ValueError(f"Position calculation failed: {str(e)}")
+ValueError: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Blending failed: Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 396, in blend_images
+    position = self.calculate_garment_position(keypoints, clothing_type, clothing_img)
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 146, in calculate_garment_position
+    if left_shoulder and right_shoulder:
+       ^^^^^^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 416, in blend_images
+    raise ValueError(f"Position calculation failed: {str(e)}")
+ValueError: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 760, in static_tryon
+    result_img = tryon_system.blend_images(
+        person_img,
+    ...<3 lines>...
+        segmentation_mask
+    )
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 510, in blend_images
+    raise ValueError(f"Blending failed: {str(e)}")
+ValueError: Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Bad Request: /static-tryon/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 396, in blend_images
+    position = self.calculate_garment_position(keypoints, clothing_type, clothing_img)
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 146, in calculate_garment_position
+    if left_shoulder and right_shoulder:
+       ^^^^^^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 416, in blend_images
+    raise ValueError(f"Position calculation failed: {str(e)}")
+ValueError: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Blending failed: Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 396, in blend_images
+    position = self.calculate_garment_position(keypoints, clothing_type, clothing_img)
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 146, in calculate_garment_position
+    if left_shoulder and right_shoulder:
+       ^^^^^^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 416, in blend_images
+    raise ValueError(f"Position calculation failed: {str(e)}")
+ValueError: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 760, in static_tryon
+    result_img = tryon_system.blend_images(
+        person_img,
+    ...<3 lines>...
+        segmentation_mask
+    )
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 510, in blend_images
+    raise ValueError(f"Blending failed: {str(e)}")
+ValueError: Blending failed: Position calculation failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Bad Request: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /test-models/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (273, 205, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_003027_5796.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (182, 205, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_003033_1797.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_003040_4161.jpg
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (374, 280, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_004401_5968.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (161, 182, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_004410_9833.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (374, 280, 4)
+Starting blending process
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_004533_8523.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Clothing resized from (799, 900, 4) to (235, 265, 4)
+Starting blending process
+Adjusted clothing height to fit
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010545_8554.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010551_3847.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010604_6717.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010609_9836.jpg
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010624_5311.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010732_6151.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_010752_2987.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_011950_1920.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_012001_7363.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (462, 347, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_012312_8151.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_012909_8582.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (552, 414, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_012917_2545.jpg
+Processing image of size: (1024, 768, 3)
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Not Found: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /static-tryon/
+Processing image of size: (1024, 768, 3)
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /static-tryon/
+Processing image of size: (1024, 768, 3)
+Watching for file changes with StatReloader
+Loading YOLO models...
+YOLO models loaded successfully
+Not Found: /favicon.ico
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Clothing resized from (577, 433, 4) to (255, 192, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_021932_3864.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (388, 291, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_021938_5298.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (388, 291, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_021946_8897.jpg
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (388, 291, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_021959_2866.jpg
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (462, 347, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250812_022425_1005.jpg
+Processing image of size: (1024, 768, 3)
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (422, 317, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250815_020046_2461.jpg
+Processing image of size: (1024, 768, 3)
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (422, 317, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250825_233700_5719.jpg
+Not Found: /test-models/
+Not Found: /favicon.ico
+Processing image of size: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (454, 340, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250825_234341_2427.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-models/
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_001220_7767.jpg
+Not Found: /test-models/
+Clothing resized from (1024, 768, 4) to (450, 338, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_002111_6698.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Clothing resized from (1024, 768, 4) to (442, 331, 4)
+Starting blending process
+TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_002302_8335.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005344_1385.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005357_1305.jpg
+Bad Request: /debug-pose/
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005425_5582.jpg
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005433_8923.jpg
+Clothing resized from (577, 433, 4) to (259, 194, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005444_8827.jpg
+Clothing resized from (799, 900, 4) to (172, 194, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005453_2578.jpg
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_005459_6878.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Bad Request: /debug-pose/
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_031339_2068.jpg
+Bad Request: /debug-pose/
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_031405_1182.jpg
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_031557_1111.jpg
+Clothing resized from (1024, 768, 4) to (412, 309, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_032616_1718.jpg

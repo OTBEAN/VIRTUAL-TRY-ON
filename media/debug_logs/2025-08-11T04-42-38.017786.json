@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-08-11T04:42:38.017786",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "30"
+    ],
+    "debug": [
+      "true"
+    ]
+  },
+  "image_file": {
+    "name": "10549_00.jpg",
+    "size": 132729,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "30",
+  "clothing": {
+    "name": "remove bg",
+    "category": "other",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothing\\20250811_034402_09933_00-removebg-preview.png"
+  },
+  "clothing_type": "bottom",
+  "measurements": {
+    "shoulder_width": 301,
+    "hip_width": 198,
+    "shoulder_height": 317,
+    "shoulder_center": 407,
+    "hip_height": 771,
+    "hip_center": 384,
+    "torso_height": 460
+  },
+  "segmentation_mask_size": "640x480",
+  "segmentation_mask_pixels": 155487,
+  "result_url": "/media/tryon_results\\result_20250811_044238_9349.jpg",
+  "success": true
+}

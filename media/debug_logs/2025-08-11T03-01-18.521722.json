@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-08-11T03:01:18.521722",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "27"
+    ],
+    "debug": [
+      "true"
+    ]
+  },
+  "image_file": {
+    "name": "03615_00.jpg",
+    "size": 142421,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "27",
+  "clothing": {
+    "name": "wewe",
+    "category": "top",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothing\\20250806_012839_11791_00.jpg"
+  },
+  "clothing_type": "top",
+  "measurements": {
+    "shoulder_width": 264,
+    "hip_width": 170,
+    "shoulder_height": 354,
+    "shoulder_center": 391,
+    "hip_height": 775,
+    "hip_center": 333,
+    "torso_height": 434
+  },
+  "segmentation_mask_size": "640x480",
+  "segmentation_mask_pixels": 132761,
+  "error": "Blending failed: 'VirtualTryOnSystem' object has no attribute 'blend_images'"
+}
