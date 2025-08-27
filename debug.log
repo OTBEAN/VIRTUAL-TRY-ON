@@ -1366,3 +1366,37 @@ Clothing resized from (1024, 768, 4) to (412, 309, 4)
 Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
 Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
 Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_032616_1718.jpg
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_035156_5307.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_035212_7442.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_035237_4509.jpg
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_035801_5045.jpg
+Clothing resized from (799, 900, 4) to (85, 96, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_035925_4908.jpg
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_035933_1620.jpg
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_040040_1809.jpg
+Bad Request: /debug-pose/
+Bad Request: /debug-pose/
