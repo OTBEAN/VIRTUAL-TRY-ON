@@ -26,13 +26,18 @@ from .models import ClothingItem
 # Configure logging
 logger = logging.getLogger(__name__)
 
-# Updated VirtualTryOnSystem class with pose-aware clothing adjustment
+# Updated VirtualTryOnSystem class with enhanced geometric matching
 class VirtualTryOnSystem:
     def __init__(self):
         self.media_root = settings.MEDIA_ROOT
         self.media_url = settings.MEDIA_URL
         self.result_dir = os.path.join(self.media_root, 'tryon_results')
         os.makedirs(self.result_dir, exist_ok=True)
+        self.gmm_params = {
+            'grid_size': 5,
+            'total_pts': 1000,
+            'lambda_val': 0.01
+        }
         
         # Initialize YOLO models
         try:
@@ -51,6 +56,165 @@ class VirtualTryOnSystem:
         self.dci_vton_url = "http://localhost:8002/process"
         self.schp_url = "http://localhost:8003/segment"
         self.densepose_url = "http://localhost:8004/process"
+
+            # Add the new GMM and TOM methods here
+    def extract_clothing_features(self, clothing_img):
+        """Extract features from clothing for geometric matching"""
+        try:
+            # Convert to grayscale if needed
+            if len(clothing_img.shape) == 3:
+                gray = cv2.cvtColor(clothing_img, cv2.COLOR_BGR2GRAY)
+            else:
+                gray = clothing_img
+            
+            # Use ORB feature detector
+            orb = cv2.ORB_create(nfeatures=1000)
+            keypoints, descriptors = orb.detectAndCompute(gray, None)
+            
+            return keypoints, descriptors
+        except Exception as e:
+            logger.error(f"Feature extraction failed: {str(e)}")
+            return None, None
+    
+    def find_feature_correspondences(self, person_img, clothing_img, clothing_type):
+        """Find correspondences between person and clothing features"""
+        try:
+            # Get person keypoints
+            person_keypoints = self._get_keypoints(person_img)
+            if person_keypoints is None:
+                return None, None
+            
+            # Extract clothing features
+            clothing_kps, clothing_descs = self.extract_clothing_features(clothing_img)
+            if clothing_kps is None:
+                return None, None
+            
+            # Extract person features from the relevant region
+            if clothing_type == 'top':
+                # Focus on upper body
+                y_start = max(0, int(person_img.shape[0] * 0.1))
+                y_end = min(person_img.shape[0], int(person_img.shape[0] * 0.7))
+            else:
+                # Focus on lower body
+                y_start = max(0, int(person_img.shape[0] * 0.4))
+                y_end = person_img.shape[0]
+            
+            person_region = person_img[y_start:y_end, :]
+            orb = cv2.ORB_create(nfeatures=1000)
+            person_kps, person_descs = orb.detectAndCompute(person_region, None)
+            
+            if person_kps is None or person_descs is None:
+                return None, None
+            
+            # Adjust person keypoint coordinates
+            for kp in person_kps:
+                kp.pt = (kp.pt[0], kp.pt[1] + y_start)
+            
+            # Match features using FLANN
+            FLANN_INDEX_LSH = 6
+            index_params = dict(algorithm=FLANN_INDEX_LSH, 
+                               table_number=6,
+                               key_size=12,
+                               multi_probe_level=1)
+            search_params = dict(checks=50)
+            
+            flann = cv2.FlannBasedMatcher(index_params, search_params)
+            matches = flann.knnMatch(clothing_descs, person_descs, k=2)
+            
+            # Apply Lowe's ratio test
+            good_matches = []
+            for m, n in matches:
+                if m.distance < 0.7 * n.distance:
+                    good_matches.append(m)
+            
+            if len(good_matches) < 10:  # Need enough matches
+                return None, None
+            
+            # Get corresponding points
+            src_pts = np.float32([clothing_kps[m.queryIdx].pt for m in good_matches])
+            dst_pts = np.float32([person_kps[m.trainIdx].pt for m in good_matches])
+            
+            return src_pts, dst_pts
+            
+        except Exception as e:
+            logger.error(f"Feature correspondence failed: {str(e)}")
+            return None, None
+    
+    def refine_warping_with_correspondences(self, warped_clothing, src_pts, dst_pts):
+        """Refine warping using feature correspondences"""
+        try:
+            # Find homography
+            H, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+            
+            if H is None:
+                return warped_clothing
+            
+            # Apply homography to refine warping
+            h, w = warped_clothing.shape[:2]
+            refined = cv2.warpPerspective(warped_clothing, H, (w, h))
+            
+            return refined
+        except Exception as e:
+            logger.error(f"Warp refinement failed: {str(e)}")
+            return warped_clothing
+    
+    def try_on_module(self, person_img, clothing_img, clothing_mask, x, y, landmarks):
+        """Try-On Module: Advanced blending with realistic lighting and texture"""
+        try:
+            # Create a copy of the person image
+            result = person_img.copy().astype(np.float32)
+            
+            # Calculate region bounds
+            y_start = max(0, y)
+            y_end = min(person_img.shape[0], y + clothing_img.shape[0])
+            x_start = max(0, x)
+            x_end = min(person_img.shape[1], x + clothing_img.shape[1])
+            
+            # Adjust clothing if needed
+            clothing_region = clothing_img[:y_end-y_start, :x_end-x_start]
+            mask_region = clothing_mask[:y_end-y_start, :x_end-x_start]
+            
+            # Get the person region under the clothing
+            person_region = result[y_start:y_end, x_start:x_end]
+            
+            # Apply clothing with advanced blending
+            for c in range(3):
+                blended_region = (
+                    clothing_region[:, :, c] * mask_region +
+                    person_region[:, :, c] * (1 - mask_region)
+                )
+                
+                # Apply to result
+                result[y_start:y_end, x_start:x_end, c] = blended_region
+            
+            # Convert back to uint8
+            result = result.astype(np.uint8)
+            
+            # Apply realistic lighting effects
+            result = self.apply_realistic_lighting(result, clothing_img, clothing_mask, x, y, landmarks)
+            
+            # Add fabric texture
+            clothing_area = result[y_start:y_end, x_start:x_end]
+            textured_clothing = self.add_fabric_texture(clothing_area.copy())
+            
+            # Blend textured clothing back into result
+            for c in range(3):
+                result[y_start:y_end, x_start:x_end, c] = (
+                    textured_clothing[:, :, c] * mask_region +
+                    result[y_start:y_end, x_start:x_end, c] * (1 - mask_region)
+                )
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Try-On Module failed: {str(e)}")
+            # Fallback to simple blending
+            result = person_img.copy()
+            result[y:y+clothing_img.shape[0], x:x+clothing_img.shape[1]] = (
+                clothing_img * clothing_mask[..., np.newaxis] +
+                result[y:y+clothing_img.shape[0], x:x+clothing_img.shape[1]] * (1 - clothing_mask[..., np.newaxis])
+            )
+            return result.astype(np.uint8)
 
     def call_external_model(self, url, image_data, params=None):
         """Helper method to call external models"""
@@ -184,6 +348,492 @@ class VirtualTryOnSystem:
         except Exception as e:
             logger.error(f"Advanced blending failed: {str(e)}")
             return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+
+    # Enhanced methods for better person detection and geometric matching
+    def get_enhanced_body_segmentation(self, image):
+        """Improved body segmentation with edge refinement"""
+        try:
+            # Use YOLO segmentation
+            results = self.segmentation_model(image, verbose=False, conf=0.5)
+            
+            if not results or not results[0].masks:
+                # Fallback to background subtraction
+                return self.fallback_segmentation(image)
+            
+            # Get the largest mask (assuming it's the person)
+            masks = results[0].masks.data.cpu().numpy()
+            largest_mask = None
+            max_area = 0
+            
+            for i in range(masks.shape[0]):
+                mask = masks[i]
+                area = np.sum(mask > 0.5)
+                if area > max_area:
+                    max_area = area
+                    largest_mask = mask
+            
+            # Refine mask edges
+            refined_mask = self.refine_mask_edges(largest_mask)
+            
+            return refined_mask
+            
+        except Exception as e:
+            logger.error(f"Enhanced segmentation failed: {str(e)}")
+            return self.fallback_segmentation(image)
+
+    def refine_mask_edges(self, mask):
+        """Refine mask edges using morphological operations"""
+        kernel = np.ones((3, 3), np.uint8)
+        
+        # Close small holes
+        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+        
+        # Open to remove small artifacts
+        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+        
+        # Gaussian blur for smooth edges
+        mask = cv2.GaussianBlur(mask, (5, 5), 0)
+        
+        return (mask > 0.5).astype(np.uint8) * 255
+
+    def fallback_segmentation(self, image):
+        """Fallback segmentation using GrabCut algorithm"""
+        try:
+            # Create a mask using GrabCut
+            mask = np.zeros(image.shape[:2], np.uint8)
+            
+            # Initialize background and foreground models
+            bgd_model = np.zeros((1, 65), np.float64)
+            fgd_model = np.zeros((1, 65), np.float64)
+            
+            # Define rectangle (assuming person is in center)
+            height, width = image.shape[:2]
+            rect = (int(width*0.1), int(height*0.1), int(width*0.8), int(height*0.8))
+            
+            # Apply GrabCut
+            cv2.grabCut(image, mask, rect, bgd_model, fgd_model, 5, cv2.GC_INIT_WITH_RECT)
+            
+            # Create binary mask
+            mask = np.where((mask == 2) | (mask == 0), 0, 1).astype('uint8') * 255
+            
+            return mask
+        except Exception as e:
+            logger.error(f"GrabCut segmentation failed: {str(e)}")
+            # Final fallback - assume entire image is person
+            return np.ones(image.shape[:2], dtype=np.uint8) * 255
+
+    def get_enhanced_pose_estimation(self, image):
+        """Get pose estimation with validation and fallback"""
+        try:
+            # Get keypoints from YOLO
+            keypoints_data = self.get_enhanced_keypoints(image, min_confidence=0.3)
+            
+            if keypoints_data is None:
+                return self.estimate_pose_from_contours(image)
+            
+            # Convert to standard format
+            keypoints = []
+            confidences = []
+            
+            for idx, (kp, conf) in enumerate(keypoints_data):
+                if kp is not None:
+                    keypoints.append(kp)
+                    confidences.append(conf)
+                else:
+                    keypoints.append([0, 0])
+                    confidences.append(0)
+            
+            # Validate keypoints
+            if not self.validate_keypoints(keypoints, confidences):
+                return self.estimate_pose_from_contours(image)
+            
+            return np.array(keypoints), np.array(confidences)
+            
+        except Exception as e:
+            logger.error(f"Pose estimation failed: {str(e)}")
+            return self.estimate_pose_from_contours(image)
+
+    def validate_keypoints(self, keypoints, confidences):
+        """Validate that keypoints form a reasonable human pose"""
+        # Check if we have enough keypoints
+        valid_count = sum(1 for conf in confidences if conf > 0.3)
+        if valid_count < 8:  # Minimum keypoints for reasonable pose
+            return False
+        
+        # Check shoulder-hip alignment
+        left_shoulder = keypoints[5]
+        right_shoulder = keypoints[6]
+        left_hip = keypoints[11]
+        right_hip = keypoints[12]
+        
+        if (confidences[5] > 0.3 and confidences[6] > 0.3 and
+            confidences[11] > 0.3 and confidences[12] > 0.3):
+            shoulder_width = np.linalg.norm(left_shoulder - right_shoulder)
+            hip_width = np.linalg.norm(left_hip - right_hip)
+            
+            # Shoulder and hip widths should be somewhat proportional
+            if hip_width > shoulder_width * 2 or shoulder_width > hip_width * 2:
+                return False
+        
+        return True
+
+    def estimate_pose_from_contours(self, image):
+        """Fallback pose estimation using body contours"""
+        try:
+            # Get body segmentation
+            mask = self.get_enhanced_body_segmentation(image)
+            
+            if mask is None:
+                return None, None
+            
+            # Find contours
+            contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            
+            if not contours:
+                return None, None
+            
+            # Get largest contour (assumed to be person)
+            largest_contour = max(contours, key=cv2.contourArea)
+            
+            # Estimate keypoints based on contour geometry
+            return self.estimate_keypoints_from_contour(largest_contour, image.shape)
+            
+        except Exception as e:
+            logger.error(f"Contour-based pose estimation failed: {str(e)}")
+            return None, None
+
+    def estimate_keypoints_from_contour(self, contour, image_shape):
+        """Estimate keypoints from body contour"""
+        try:
+            # Get bounding rectangle
+            x, y, w, h = cv2.boundingRect(contour)
+            
+            # Estimate keypoints based on bounding box proportions
+            keypoints = np.zeros((17, 2))
+            confidences = np.zeros(17)
+            
+            # Nose (top center of bounding box)
+            keypoints[0] = [x + w/2, y + h*0.1]
+            confidences[0] = 0.7
+            
+            # Shoulders
+            keypoints[5] = [x + w*0.2, y + h*0.3]  # Left shoulder
+            keypoints[6] = [x + w*0.8, y + h*0.3]  # Right shoulder
+            confidences[5] = confidences[6] = 0.8
+            
+            # Hips
+            keypoints[11] = [x + w*0.2, y + h*0.6]  # Left hip
+            keypoints[12] = [x + w*0.8, y + h*0.6]  # Right hip
+            confidences[11] = confidences[12] = 0.8
+            
+            # Ankles
+            keypoints[15] = [x + w*0.2, y + h*0.9]  # Left ankle
+            keypoints[16] = [x + w*0.8, y + h*0.9]  # Right ankle
+            confidences[15] = confidences[16] = 0.7
+            
+            return keypoints, confidences
+            
+        except Exception as e:
+            logger.error(f"Keypoint estimation from contour failed: {str(e)}")
+            return None, None
+
+    def create_geometric_matching_module(self):
+        """Create a complete geometric matching module for clothing warping"""
+        return {
+            'extract_features': self.extract_clothing_features,
+            'match_points': self.match_clothing_to_body_points,
+            'warp_clothing': self.enhanced_tps_warp,
+            'refine_warping': self.refine_warping_with_correspondences
+        }
+    
+    def match_clothing_to_body_points(self, body_keypoints, clothing_img, clothing_type):
+        """Match clothing control points to body keypoints"""
+        h, w = clothing_img.shape[:2]
+        
+        # Define source points on clothing based on type
+        if clothing_type == 'top':
+            src_points = np.array([
+                [0, 0],                  # Top-left
+                [w-1, 0],                # Top-right
+                [w-1, h-1],              # Bottom-right
+                [0, h-1],                # Bottom-left
+                [w//2, 0],               # Top-center
+                [w//2, h-1],             # Bottom-center
+                [w//4, h//2],            # Left-middle
+                [3*w//4, h//2]           # Right-middle
+            ], dtype=np.float32)
+            
+            # Map to body keypoints
+            dst_points = np.array([
+                body_keypoints[5] if body_keypoints[5] is not None and np.any(body_keypoints[5]) else [0, 0],  # Left shoulder
+                body_keypoints[6] if body_keypoints[6] is not None and np.any(body_keypoints[6]) else [0, 0],  # Right shoulder
+                body_keypoints[12] if body_keypoints[12] is not None and np.any(body_keypoints[12]) else [0, 0], # Right hip
+                body_keypoints[11] if body_keypoints[11] is not None and np.any(body_keypoints[11]) else [0, 0], # Left hip
+                [(body_keypoints[5][0] + body_keypoints[6][0])/2 if body_keypoints[5] is not None and body_keypoints[6] is not None and np.any(body_keypoints[5]) and np.any(body_keypoints[6]) else 0, 
+                 (body_keypoints[5][1] + body_keypoints[6][1])/2 if body_keypoints[5] is not None and body_keypoints[6] is not None and np.any(body_keypoints[5]) and np.any(body_keypoints[6]) else 0],  # Shoulder center
+                [(body_keypoints[11][0] + body_keypoints[12][0])/2 if body_keypoints[11] is not None and body_keypoints[12] is not None and np.any(body_keypoints[11]) and np.any(body_keypoints[12]) else 0, 
+                 (body_keypoints[11][1] + body_keypoints[12][1])/2 if body_keypoints[11] is not None and body_keypoints[12] is not None and np.any(body_keypoints[11]) and np.any(body_keypoints[12]) else 0],  # Hip center
+                body_keypoints[7] if body_keypoints[7] is not None and np.any(body_keypoints[7]) else [0, 0],  # Left elbow
+                body_keypoints[8] if body_keypoints[8] is not None and np.any(body_keypoints[8]) else [0, 0]   # Right elbow
+            ], dtype=np.float32)
+            
+        elif clothing_type == 'bottom':
+            src_points = np.array([
+                [0, 0],                  # Top-left
+                [w-1, 0],                # Top-right
+                [w-1, h-1],              # Bottom-right
+                [0, h-1],                # Bottom-left
+                [w//2, 0],               # Top-center
+                [w//2, h-1],             # Bottom-center
+                [w//4, h//3],            # Left-upper
+                [3*w//4, h//3]           # Right-upper
+            ], dtype=np.float32)
+            
+            dst_points = np.array([
+                body_keypoints[11] if body_keypoints[11] is not None and np.any(body_keypoints[11]) else [0, 0],  # Left hip
+                body_keypoints[12] if body_keypoints[12] is not None and np.any(body_keypoints[12]) else [0, 0],  # Right hip
+                body_keypoints[16] if body_keypoints[16] is not None and np.any(body_keypoints[16]) else [0, 0],  # Right ankle
+                body_keypoints[15] if body_keypoints[15] is not None and np.any(body_keypoints[15]) else [0, 0],  # Left ankle
+                [(body_keypoints[11][0] + body_keypoints[12][0])/2 if body_keypoints[11] is not None and body_keypoints[12] is not None and np.any(body_keypoints[11]) and np.any(body_keypoints[12]) else 0, 
+                 (body_keypoints[11][1] + body_keypoints[12][1])/2 if body_keypoints[11] is not None and body_keypoints[12] is not None and np.any(body_keypoints[11]) and np.any(body_keypoints[12]) else 0],  # Hip center
+                [(body_keypoints[15][0] + body_keypoints[16][0])/2 if body_keypoints[15] is not None and body_keypoints[16] is not None and np.any(body_keypoints[15]) and np.any(body_keypoints[16]) else 0, 
+                 (body_keypoints[15][1] + body_keypoints[16][1])/2 if body_keypoints[15] is not None and body_keypoints[16] is not None and np.any(body_keypoints[15]) and np.any(body_keypoints[16]) else 0],  # Ankle center
+                body_keypoints[13] if body_keypoints[13] is not None and np.any(body_keypoints[13]) else [0, 0],  # Left knee
+                body_keypoints[14] if body_keypoints[14] is not None and np.any(body_keypoints[14]) else [0, 0]   # Right knee
+            ], dtype=np.float32)
+        
+        else:  # dress or other
+            src_points = np.array([
+                [0, 0],                  # Top-left
+                [w-1, 0],                # Top-right
+                [w-1, h-1],              # Bottom-right
+                [0, h-1],                # Bottom-left
+                [w//2, 0],               # Top-center
+                [w//2, h-1],             # Bottom-center
+                [w//4, h//2],            # Left-middle
+                [3*w//4, h//2]           # Right-middle
+            ], dtype=np.float32)
+            
+            dst_points = np.array([
+                body_keypoints[5] if body_keypoints[5] is not None and np.any(body_keypoints[5]) else [0, 0],   # Left shoulder
+                body_keypoints[6] if body_keypoints[6] is not None and np.any(body_keypoints[6]) else [0, 0],   # Right shoulder
+                body_keypoints[16] if body_keypoints[16] is not None and np.any(body_keypoints[16]) else [0, 0], # Right ankle
+                body_keypoints[15] if body_keypoints[15] is not None and np.any(body_keypoints[15]) else [0, 0], # Left ankle
+                [(body_keypoints[5][0] + body_keypoints[6][0])/2 if body_keypoints[5] is not None and body_keypoints[6] is not None and np.any(body_keypoints[5]) and np.any(body_keypoints[6]) else 0, 
+                 (body_keypoints[5][1] + body_keypoints[6][1])/2 if body_keypoints[5] is not None and body_keypoints[6] is not None and np.any(body_keypoints[5]) and np.any(body_keypoints[6]) else 0],  # Shoulder center
+                [(body_keypoints[15][0] + body_keypoints[16][0])/2 if body_keypoints[15] is not None and body_keypoints[16] is not None and np.any(body_keypoints[15]) and np.any(body_keypoints[16]) else 0, 
+                 (body_keypoints[15][1] + body_keypoints[16][1])/2 if body_keypoints[15] is not None and body_keypoints[16] is not None and np.any(body_keypoints[15]) and np.any(body_keypoints[16]) else 0],  # Ankle center
+                body_keypoints[11] if body_keypoints[11] is not None and np.any(body_keypoints[11]) else [0, 0], # Left hip
+                body_keypoints[12] if body_keypoints[12] is not None and np.any(body_keypoints[12]) else [0, 0]  # Right hip
+            ], dtype=np.float32)
+        
+        return src_points, dst_points
+
+    def enhanced_tps_warp(self, clothing_img, src_points, dst_points):
+        """Enhanced Thin Plate Spline warping with better handling of invalid points"""
+        try:
+            # Filter out invalid points (where dst_point is [0,0])
+            valid_indices = []
+            valid_src_points = []
+            valid_dst_points = []
+            
+            for i, point in enumerate(dst_points):
+                if not np.any(np.isnan(point)) and not np.any(np.isinf(point)) and np.linalg.norm(point) > 10:
+                    valid_indices.append(i)
+                    valid_src_points.append(src_points[i])
+                    valid_dst_points.append(point)
+            
+            if len(valid_indices) < 4:
+                logger.warning("Not enough valid points for TPS warping")
+                return clothing_img
+            
+            valid_src_points = np.array(valid_src_points, dtype=np.float32)
+            valid_dst_points = np.array(valid_dst_points, dtype=np.float32)
+            
+            # Reshape for TPS
+            valid_src_points = valid_src_points.reshape(1, -1, 2)
+            valid_dst_points = valid_dst_points.reshape(1, -1, 2)
+            
+            # Create TPS transformer
+            tps = cv2.createThinPlateSplineShapeTransformer()
+            
+            # Create matches
+            matches = [cv2.DMatch(i, i, 0) for i in range(len(valid_indices))]
+            
+            # Estimate transformation
+            tps.estimateTransformation(valid_dst_points, valid_src_points, matches)
+            
+            # Warp image
+            warped_img = tps.warpImage(clothing_img)
+            
+            return warped_img
+            
+        except Exception as e:
+            logger.error(f"Enhanced TPS warping failed: {str(e)}")
+            return clothing_img
+
+    def apply_clothing_with_geometric_matching(self, person_img, clothing_img, clothing_type):
+        """Apply clothing using proper geometric matching pipeline"""
+        try:
+            # Step 1: Find feature correspondences (GMM)
+            src_pts, dst_pts = self.find_feature_correspondences(person_img, clothing_img, clothing_type)
+            
+            # Step 2: Get body landmarks for initial warping
+            landmarks = self.get_body_landmarks(person_img)
+            if landmarks is None:
+                logger.warning("No landmarks detected, using fallback placement")
+                return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+            
+            # Step 3: Use geometric matching module for initial warping
+            gmm = self.create_geometric_matching_module()
+            src_points, dst_points = gmm['match_points'](landmarks, clothing_img, clothing_type)
+            
+            # Step 4: Warp clothing to match body geometry
+            warped_clothing = gmm['warp_clothing'](clothing_img, src_points, dst_points)
+            
+            # Step 5: Refine warping using feature correspondences if available
+            if src_pts is not None and dst_pts is not None:
+                warped_clothing = gmm['refine_warping'](warped_clothing, src_pts, dst_pts)
+            
+            # Step 6: Calculate placement
+            placement = self.calculate_clothing_placement(landmarks, clothing_type, warped_clothing.shape)
+            if placement is None:
+                return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+            
+            # Step 7: Preserve texture details during resizing
+            resized_clothing = self.preserve_texture_resize(
+                warped_clothing, 
+                (int(placement['width']), int(placement['height']))
+            )
+            
+            # Step 8: Create mask from alpha channel
+            if resized_clothing.shape[2] == 4:
+                clothing_mask = resized_clothing[:, :, 3] / 255.0
+                clothing_rgb = resized_clothing[:, :, :3]
+            else:
+                clothing_mask = np.ones(resized_clothing.shape[:2])
+                clothing_rgb = resized_clothing
+            
+            # Step 9: Apply with advanced blending (TOM)
+            result_img = self.try_on_module(
+                person_img, 
+                clothing_rgb, 
+                clothing_mask, 
+                int(placement['position_x']), 
+                int(placement['position_y']),
+                landmarks
+            )
+            
+            return result_img
+            
+        except Exception as e:
+            logger.error(f"Geometric matching clothing application failed: {str(e)}")
+            return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+
+    def preserve_texture_resize(self, image, target_size):
+        """Resize image while preserving texture details"""
+        try:
+            # Use Lanczos interpolation for better quality
+            resized = cv2.resize(image, target_size, interpolation=cv2.INTER_LANCZOS4)
+            
+            # Apply slight sharpening to preserve details
+            kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+            sharpened = cv2.filter2D(resized, -1, kernel)
+            
+            # Blend original and sharpened to avoid over-sharpening
+            result = cv2.addWeighted(resized, 0.85, sharpened, 0.15, 0)
+            
+            return result
+        except Exception as e:
+            logger.error(f"Texture-preserving resize failed: {str(e)}")
+            return cv2.resize(image, target_size, interpolation=cv2.INTER_LINEAR)
+
+    def advanced_blending(self, person_img, clothing_img, clothing_mask, x, y):
+        """Advanced blending considering lighting and texture"""
+        try:
+            result = person_img.copy().astype(np.float32)
+            
+            # Calculate region bounds
+            y_start = max(0, y)
+            y_end = min(person_img.shape[0], y + clothing_img.shape[0])
+            x_start = max(0, x)
+            x_end = min(person_img.shape[1], x + clothing_img.shape[1])
+            
+            # Adjust clothing if needed
+            clothing_region = clothing_img[:y_end-y_start, :x_end-x_start]
+            mask_region = clothing_mask[:y_end-y_start, :x_end-x_start]
+            
+            # Get the person region under the clothing
+            person_region = result[y_start:y_end, x_start:x_end]
+            
+            # Advanced blending considering texture and lighting
+            for c in range(3):
+                # Blend based on mask
+                blended_region = (
+                    clothing_region[:, :, c] * mask_region +
+                    person_region[:, :, c] * (1 - mask_region)
+                )
+                
+                # Apply to result
+                result[y_start:y_end, x_start:x_end, c] = blended_region
+            
+            return result.astype(np.uint8)
+            
+        except Exception as e:
+            logger.error(f"Advanced blending failed: {str(e)}")
+            # Fallback to simple blending
+            result = person_img.copy()
+            result[y:y+clothing_img.shape[0], x:x+clothing_img.shape[1]] = (
+                clothing_img * clothing_mask[..., np.newaxis] +
+                result[y:y+clothing_img.shape[0], x:x+clothing_img.shape[1]] * (1 - clothing_mask[..., np.newaxis])
+            )
+            return result.astype(np.uint8)
+
+    def apply_realistic_lighting(self, result_img, clothing_img, clothing_mask, x, y, landmarks):
+        """Apply realistic lighting effects based on body contours"""
+        try:
+            # Create a shadow mask based on body shape
+            shadow_mask = self.create_shadow_mask(result_img.shape, landmarks, x, y, clothing_img.shape)
+            
+            # Apply shadow to result
+            shadow_strength = 0.3  # Adjust based on lighting conditions
+            result_img = result_img * (1 - shadow_mask * shadow_strength)
+            
+            # Add highlights to clothing edges
+            highlight_mask = self.create_highlight_mask(clothing_mask)
+            highlight_strength = 0.2
+            clothing_area = result_img[y:y+clothing_img.shape[0], x:x+clothing_img.shape[1]]
+            clothing_area += clothing_img * highlight_mask[..., np.newaxis] * highlight_strength
+            
+            return np.clip(result_img, 0, 255).astype(np.uint8)
+            
+        except Exception as e:
+            logger.error(f"Lighting effects failed: {str(e)}")
+            return result_img
+
+    def create_shadow_mask(self, image_shape, landmarks, x, y, clothing_shape):
+        """Create shadow mask based on body shape and lighting direction"""
+        shadow_mask = np.zeros(image_shape[:2], dtype=np.float32)
+        
+        # Simple shadow implementation - darker at bottom
+        for i in range(image_shape[0]):
+            shadow_mask[i, :] = min(1.0, (image_shape[0] - i) / image_shape[0] * 0.5)
+        
+        return shadow_mask
+
+    def create_highlight_mask(self, clothing_mask):
+        """Create highlight mask for clothing edges"""
+        # Detect edges in the clothing mask
+        edges = cv2.Canny((clothing_mask * 255).astype(np.uint8), 100, 200)
+        
+        # Dilate edges to make highlights more visible
+        kernel = np.ones((3, 3), np.uint8)
+        dilated_edges = cv2.dilate(edges, kernel, iterations=1)
+        
+        # Convert to float and normalize
+        highlight_mask = dilated_edges.astype(np.float32) / 255.0
+        
+        return highlight_mask
 
     # Existing methods from the original class (maintained for compatibility)
     def process_image(self, image_file):
@@ -625,7 +1275,7 @@ class VirtualTryOnSystem:
             
             mask = results[0].masks[0].data[0].cpu().numpy()
             mask = cv2.GaussianBlur(mask, (5,5), 0)
-            return (mask > 0.5).ast(np.uint8) * 255
+            return (mask > 0.5).astype(np.uint8) * 255
         except Exception as e:
             logger.error(f"Segmentation failed: {str(e)}")
             return None
@@ -759,9 +1409,10 @@ class VirtualTryOnSystem:
             return clothing_img
 
     def blend_images(self, person_img, clothing_img, clothing_type, measurements, segmentation_mask=None):
-        """Updated blend_images method using pose-aware approach"""
+        """Updated blend_images method using proper GMM+TOM pipeline"""
         try:
-            result_img = self.apply_clothing_with_pose(person_img, clothing_img, clothing_type)
+            # Use enhanced geometric matching for better results
+            result_img = self.apply_clothing_with_geometric_matching(person_img, clothing_img, clothing_type)
             
             result_img = self.apply_shadows_and_highlights(
                 result_img, 
@@ -917,8 +1568,6 @@ def upload_clothing(request):
             'message': str(e)
         }, status=500)
 
-
-
 @csrf_exempt
 def static_tryon(request):
     """Enhanced virtual try-on endpoint with detailed error reporting"""
@@ -972,8 +1621,8 @@ def static_tryon(request):
         if clothing_img is None:
             return JsonResponse({'error': 'Clothing processing failed'}, status=400)
 
-        # Use fallback method (more reliable)
-        result_img = tryon_system.apply_clothing_fallback(
+        # Use enhanced geometric matching method
+        result_img = tryon_system.apply_clothing_with_geometric_matching(
             person_img, 
             clothing_img, 
             clothing_type

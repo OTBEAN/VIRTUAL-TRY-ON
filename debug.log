@@ -1656,3 +1656,190 @@ C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\settings.py changed, relo
 Watching for file changes with StatReloader
 Loading enhanced YOLO models...
 Enhanced YOLO models loaded successfully
+Not Found: /test-connection/
+Not Found: /favicon.ico
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\06802_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020439_2873.jpg
+Bad Request: /debug-pose/
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\07429_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020515_1015.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\11791_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020521_6189.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\11791_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020607_5255.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\02783_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020612_2533.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250808_043341_transparent dress.png
+Original clothing image shape: (799, 900, 3)
+Clothing resized from (799, 900, 4) to (229, 258, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020619_1225.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250811_034402_09933_00-removebg-preview.png
+Original clothing image shape: (577, 433, 4)
+Clothing resized from (577, 433, 4) to (343, 258, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020626_7158.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250811_034402_09933_00-removebg-preview.png
+Original clothing image shape: (577, 433, 4)
+Clothing resized from (577, 433, 4) to (343, 258, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020629_4375.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250811_034402_09933_00-removebg-preview.png
+Original clothing image shape: (577, 433, 4)
+Clothing resized from (577, 433, 4) to (343, 258, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020632_9568.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250805_023715_11028_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_020636_9041.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-connection/
+Not Found: /favicon.ico
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250806_012839_11791_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (442, 331, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_033908_3660.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250806_010228_07429_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (442, 331, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_033916_4750.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\11791_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (442, 331, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_033928_9437.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothes\02783_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (442, 331, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_033939_3900.jpg
+Bad Request: /debug-pose/
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250811_034402_09933_00-removebg-preview.png
+Original clothing image shape: (577, 433, 4)
+Clothing resized from (577, 433, 4) to (279, 210, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_033951_4529.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250808_043341_transparent dress.png
+Original clothing image shape: (799, 900, 3)
+Clothing resized from (799, 900, 4) to (186, 210, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_034003_5554.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250804_053631_01430_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (442, 331, 4)
+Enhanced TPS warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Lighting effects failed: operands could not be broadcast together with shapes (1000,750,3) (1000,750) 
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_034007_4987.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /test-connection/
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250806_012839_11791_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Geometric matching clothing application failed: 'VirtualTryOnSystem' object has no attribute 'extract_clothing_features'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_035911_4862.jpg
+Bad Request: /debug-pose/
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250829_040046_03751_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (344, 258, 4)
+Geometric matching clothing application failed: 'VirtualTryOnSystem' object has no attribute 'extract_clothing_features'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_040055_3352.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250829_040046_03751_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (344, 258, 4)
+Geometric matching clothing application failed: 'VirtualTryOnSystem' object has no attribute 'extract_clothing_features'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_040108_1167.jpg
+Processing clothing from path: C:\Users\lenovo\Desktop\office project\bodyapp\media\clothing\20250805_023715_11028_00.jpg
+Original clothing image shape: (1024, 768, 3)
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Geometric matching clothing application failed: 'VirtualTryOnSystem' object has no attribute 'extract_clothing_features'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250829_040129_5100.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
