@@ -1400,3 +1400,259 @@ Shadow effect failed: module 'cv2' has no attribute 'CCOLOR_LAB2BGR'
 Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250826_040040_1809.jpg
 Bad Request: /debug-pose/
 Bad Request: /debug-pose/
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_031040_6363.jpg
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_031051_8943.jpg
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_031215_1504.jpg
+Bad Request: /debug-pose/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\apps.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\apps.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\apps.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\apps.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\apps.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Bad Request: /debug-pose/
+Clothing resized from (1024, 768, 4) to (221, 166, 4)
+Error calling http://localhost:8003/segment: HTTPConnectionPool(host='localhost', port=8003): Max retries exceeded with url: /segment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000227FB41F620>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+SCHP segmentation failed, using fallback
+Advanced blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034701_3199.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Error calling http://localhost:8003/segment: HTTPConnectionPool(host='localhost', port=8003): Max retries exceeded with url: /segment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000227FB407390>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+SCHP segmentation failed, using fallback
+Advanced blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034737_7496.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Error calling http://localhost:8003/segment: HTTPConnectionPool(host='localhost', port=8003): Max retries exceeded with url: /segment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000227FB407C50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+SCHP segmentation failed, using fallback
+Advanced blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034800_4902.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Standard blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034809_1859.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Standard blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034821_1397.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Error calling http://localhost:8003/segment: HTTPConnectionPool(host='localhost', port=8003): Max retries exceeded with url: /segment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000227FB40BCE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+SCHP segmentation failed, using fallback
+Advanced blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034837_1275.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Standard blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034844_6706.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Error calling http://localhost:8003/segment: HTTPConnectionPool(host='localhost', port=8003): Max retries exceeded with url: /segment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000227FB40A9E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+SCHP segmentation failed, using fallback
+Advanced blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_034858_5791.jpg
+Clothing resized from (1024, 768, 4) to (537, 403, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Standard blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_035146_5926.jpg
+Clothing resized from (1024, 768, 4) to (450, 338, 4)
+Pose warping failed: module 'cv2' has no attribute 'createThinPlateSplineShapeTransformer'
+Standard blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_035209_3613.jpg
+Clothing resized from (1024, 768, 4) to (450, 338, 4)
+Error calling http://localhost:8003/segment: HTTPConnectionPool(host='localhost', port=8003): Max retries exceeded with url: /segment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000227F1D25FD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+SCHP segmentation failed, using fallback
+Advanced blending successful
+Result saved successfully at C:\Users\lenovo\Desktop\office project\bodyapp\media\tryon_results\result_20250827_035219_5015.jpg
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Bad Request: /debug-tryon/
+Bad Request: /debug-pose/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+Bad Request: /debug-tryon/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Enhanced YOLO models loaded successfully
+Bad Request: /debug-tryon/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Not Found: /favicon.ico
+Bad Request: /debug-tryon/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 1004, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 969, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 969, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 969, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 969, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+Bad Request: /debug-pose/
+Virtual try-on failed: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Traceback (most recent call last):
+  File "C:\Users\lenovo\Desktop\office project\bodyapp\detector\views.py", line 969, in static_tryon
+    measurements = tryon_system.get_body_measurements(person_img)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'
+Internal Server Error: /static-tryon/
+C:\Users\lenovo\Desktop\office project\bodyapp\detector\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully
+C:\Users\lenovo\Desktop\office project\bodyapp\bodyapp\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Loading enhanced YOLO models...
+Enhanced YOLO models loaded successfully

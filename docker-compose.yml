@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  oot-diffusion:
+    image: oot-diffusion:latest
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./models/oot_diffusion:/app/models
+
+  dci-vton:
+    image: dci-vton:latest
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./models/dci_vton:/app/models
+
+  schp:
+    image: schp:latest
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./models/schp:/app/models
+
+  densepose:
+    image: densepose:latest
+    ports:
+      - "8004:8000"
+    volumes:
+      - ./models/densepose:/app/models

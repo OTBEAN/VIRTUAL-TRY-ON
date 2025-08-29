@@ -3,7 +3,11 @@ import json
 import logging
 import random
 from datetime import datetime
-
+import requests
+from PIL import Image
+import io
+import base64
+import tempfile
 
 import cv2
 import numpy as np
@@ -29,8 +33,8 @@ class VirtualTryOnSystem:
         self.media_url = settings.MEDIA_URL
         self.result_dir = os.path.join(self.media_root, 'tryon_results')
         os.makedirs(self.result_dir, exist_ok=True)
-
-        # Initialize YOLO models with larger models and explicit device
+        
+        # Initialize YOLO models
         try:
             logger.info("Loading enhanced YOLO models...")
             device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -39,10 +43,149 @@ class VirtualTryOnSystem:
             logger.info("Enhanced YOLO models loaded successfully")
         except Exception as e:
             logger.error(f"Failed to load YOLO models: {str(e)}", exc_info=True)
-            # Fallback to CPU if CUDA is not available
             self.pose_model = YOLO("yolov8m-pose.pt")
             self.segmentation_model = YOLO("yolov8m-seg.pt")
+        
+        # Initialize advanced model endpoints
+        self.oot_diffusion_url = "http://localhost:8001/process"
+        self.dci_vton_url = "http://localhost:8002/process"
+        self.schp_url = "http://localhost:8003/segment"
+        self.densepose_url = "http://localhost:8004/process"
 
+    def call_external_model(self, url, image_data, params=None):
+        """Helper method to call external models"""
+        try:
+            files = {'image': image_data}
+            response = requests.post(url, files=files, data=params, timeout=30)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error calling {url}: {str(e)}")
+            return None
+
+    def get_schp_segmentation(self, image):
+        """Get human segmentation using SCHP"""
+        try:
+            success, encoded_image = cv2.imencode('.jpg', image)
+            if not success:
+                raise ValueError("Could not encode image")
+            
+            image_bytes = encoded_image.tobytes()
+            response = self.call_external_model(self.schp_url, image_bytes)
+            
+            if response and response.status_code == 200:
+                segmentation_data = response.json()
+                mask = np.frombuffer(base64.b64decode(segmentation_data['mask']), np.uint8)
+                mask = cv2.imdecode(mask, cv2.IMREAD_GRAYSCALE)
+                return mask
+            return None
+        except Exception as e:
+            logger.error(f"SCHP segmentation failed: {str(e)}")
+            return None
+
+    def get_densepose(self, image):
+        """Get DensePose estimation"""
+        try:
+            success, encoded_image = cv2.imencode('.jpg', image)
+            if not success:
+                raise ValueError("Could not encode image")
+            
+            image_bytes = encoded_image.tobytes()
+            response = self.call_external_model(self.densepose_url, image_bytes)
+            
+            if response and response.status_code == 200:
+                return response.json()
+            return None
+        except Exception as e:
+            logger.error(f"DensePose estimation failed: {str(e)}")
+            return None
+
+    def generate_oot_diffusion_mask(self, clothing_img, person_img):
+        """Generate clothing mask using OOTDiffusion"""
+        try:
+            success1, encoded_clothing = cv2.imencode('.png', clothing_img)
+            success2, encoded_person = cv2.imencode('.png', person_img)
+            
+            if not success1 or not success2:
+                raise ValueError("Could not encode images")
+            
+            files = {
+                'clothing_image': encoded_clothing.tobytes(),
+                'person_image': encoded_person.tobytes()
+            }
+            
+            response = requests.post(self.oot_diffusion_url, files=files, timeout=60)
+            response.raise_for_status()
+            
+            result_data = response.json()
+            mask_bytes = base64.b64decode(result_data['mask'])
+            mask = np.frombuffer(mask_bytes, np.uint8)
+            mask = cv2.imdecode(mask, cv2.IMREAD_GRAYSCALE)
+            
+            return mask
+        except Exception as e:
+            logger.error(f"OOTDiffusion mask generation failed: {str(e)}")
+            return None
+
+    def apply_dci_vton(self, person_img, clothing_img, densepose_data, segmentation_mask):
+        """Apply virtual try-on using DCI-VTON"""
+        try:
+            success1, encoded_person = cv2.imencode('.png', person_img)
+            success2, encoded_clothing = cv2.imencode('.png', clothing_img)
+            
+            if not success1 or not success2:
+                raise ValueError("Could not encode images")
+            
+            files = {
+                'person_image': encoded_person.tobytes(),
+                'clothing_image': encoded_clothing.tobytes(),
+                'densepose_data': json.dumps(densepose_data),
+                'segmentation_mask': base64.b64encode(segmentation_mask.tobytes()).decode('utf-8')
+            }
+            
+            response = requests.post(self.dci_vton_url, files=files, timeout=60)
+            response.raise_for_status()
+            
+            result_data = response.json()
+            result_bytes = base64.b64decode(result_data['result_image'])
+            result_img = np.frombuffer(result_bytes, np.uint8)
+            result_img = cv2.imdecode(result_img, cv2.IMREAD_COLOR)
+            
+            return result_img
+        except Exception as e:
+            logger.error(f"DCI-VTON processing failed: {str(e)}")
+            return None
+
+    def blend_images_advanced(self, person_img, clothing_img, clothing_type):
+        """Advanced blending using all integrated models"""
+        try:
+            segmentation_mask = self.get_schp_segmentation(person_img)
+            if segmentation_mask is None:
+                logger.warning("SCHP segmentation failed, using fallback")
+                return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+            
+            densepose_data = self.get_densepose(person_img)
+            if densepose_data is None:
+                logger.warning("DensePose estimation failed, using fallback")
+                return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+            
+            clothing_mask = self.generate_oot_diffusion_mask(clothing_img, person_img)
+            if clothing_mask is None:
+                logger.warning("OOTDiffusion mask generation failed, using fallback")
+                return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+            
+            result_img = self.apply_dci_vton(person_img, clothing_img, densepose_data, segmentation_mask)
+            if result_img is None:
+                logger.warning("DCI-VTON processing failed, using fallback")
+                return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+            
+            return result_img
+            
+        except Exception as e:
+            logger.error(f"Advanced blending failed: {str(e)}")
+            return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
+
+    # Existing methods from the original class (maintained for compatibility)
     def process_image(self, image_file):
         """Process uploaded image file with enhanced quality"""
         try:
@@ -52,7 +195,6 @@ class VirtualTryOnSystem:
             if img is None:
                 raise ValueError("Unable to decode image")
             
-            # Resize image if it's too large for processing
             height, width = img.shape[:2]
             max_dimension = 1000
             if height > max_dimension or width > max_dimension:
@@ -69,10 +211,8 @@ class VirtualTryOnSystem:
     def get_enhanced_keypoints(self, image, min_confidence=0.3):
         """Get keypoints with confidence filtering and validation"""
         try:
-            # Resize image for better keypoint detection if needed
             height, width = image.shape[:2]
             if height > 640 or width > 640:
-                # Use a size that maintains aspect ratio but is manageable
                 scale = 640 / max(height, width)
                 new_width = int(width * scale)
                 new_height = int(height * scale)
@@ -85,25 +225,21 @@ class VirtualTryOnSystem:
                 logger.warning("No keypoints detected")
                 return None
 
-            # Get keypoints in format (num_people, num_kpts, 2)
             keypoints = results[0].keypoints.xy.cpu().numpy()
             confidences = results[0].keypoints.conf.cpu().numpy()
 
-            # We'll use just the first person detected
             if len(keypoints) == 0:
                 return None
                 
-            person_keypoints = keypoints[0]  # shape: (17, 2) for COCO keypoints
-            person_confidences = confidences[0]  # shape: (17,)
+            person_keypoints = keypoints[0]
+            person_confidences = confidences[0]
 
-            # Scale keypoints back to original image size if we resized
             if height != resized_img.shape[0] or width != resized_img.shape[1]:
                 scale_x = width / resized_img.shape[1]
                 scale_y = height / resized_img.shape[0]
                 person_keypoints[:, 0] *= scale_x
                 person_keypoints[:, 1] *= scale_y
 
-            # Filter low-confidence keypoints
             valid_keypoints = []
             for i, (kp, conf) in enumerate(zip(person_keypoints, person_confidences)):
                 if conf >= min_confidence:
@@ -122,13 +258,12 @@ class VirtualTryOnSystem:
         if keypoints_data is None:
             return None
             
-        # Convert back to simple array format
         keypoints = []
         for idx, kp in keypoints_data:
             if kp is not None:
                 keypoints.append(kp)
             else:
-                keypoints.append([0, 0])  # Placeholder for missing keypoints
+                keypoints.append([0, 0])
                 
         return np.array(keypoints)
 
@@ -138,7 +273,6 @@ class VirtualTryOnSystem:
         if keypoints is None or len(keypoints) < 17:
             return None
             
-        # COCO keypoint indices
         landmarks = {
             'nose': keypoints[0],
             'left_eye': keypoints[1],
@@ -159,7 +293,6 @@ class VirtualTryOnSystem:
             'right_ankle': keypoints[16]
         }
         
-        # Calculate additional derived landmarks
         landmarks['shoulder_center'] = (landmarks['left_shoulder'] + landmarks['right_shoulder']) / 2
         landmarks['hip_center'] = (landmarks['left_hip'] + landmarks['right_hip']) / 2
         landmarks['torso_height'] = np.linalg.norm(landmarks['shoulder_center'] - landmarks['hip_center'])
@@ -182,16 +315,14 @@ class VirtualTryOnSystem:
         }
         
         if clothing_type == 'top':
-            # For tops, align with shoulders and torso
             shoulder_width = np.linalg.norm(landmarks['left_shoulder'] - landmarks['right_shoulder'])
             torso_height = landmarks['torso_height']
             
-            placement['width'] = shoulder_width * 1.2  # 20% wider than shoulders
-            placement['height'] = torso_height * 1.1   # 10% longer than torso
+            placement['width'] = shoulder_width * 1.2
+            placement['height'] = torso_height * 1.1
             placement['position_x'] = landmarks['shoulder_center'][0] - placement['width'] / 2
             placement['position_y'] = landmarks['shoulder_center'][1] - placement['height'] * 0.1
             
-            # Calculate rotation based on shoulder angle
             shoulder_angle = np.arctan2(
                 landmarks['right_shoulder'][1] - landmarks['left_shoulder'][1],
                 landmarks['right_shoulder'][0] - landmarks['left_shoulder'][0]
@@ -199,16 +330,14 @@ class VirtualTryOnSystem:
             placement['rotation'] = np.degrees(shoulder_angle)
             
         elif clothing_type == 'bottom':
-            # For bottoms, align with hips and legs
             hip_width = np.linalg.norm(landmarks['left_hip'] - landmarks['right_hip'])
             leg_length = np.linalg.norm(landmarks['hip_center'] - landmarks['left_ankle'])
             
-            placement['width'] = hip_width * 1.15  # 15% wider than hips
-            placement['height'] = leg_length * 0.7  # 70% of leg length
+            placement['width'] = hip_width * 1.15
+            placement['height'] = leg_length * 0.7
             placement['position_x'] = landmarks['hip_center'][0] - placement['width'] / 2
             placement['position_y'] = landmarks['hip_center'][1]
             
-            # Calculate rotation based on hip angle
             hip_angle = np.arctan2(
                 landmarks['right_hip'][1] - landmarks['left_hip'][1],
                 landmarks['right_hip'][0] - landmarks['left_hip'][0]
@@ -223,46 +352,43 @@ class VirtualTryOnSystem:
             if landmarks is None:
                 return clothing_img
                 
-            # Define source points on clothing (normalized coordinates)
             h, w = clothing_img.shape[:2]
             src_points = np.array([
-                [0, 0],          # top-left
-                [w-1, 0],        # top-right
-                [w-1, h-1],      # bottom-right
-                [0, h-1],        # bottom-left
-                [w//2, 0],       # top-center
-                [w//2, h-1],     # bottom-center
-                [0, h//2],       # left-center
-                [w-1, h//2]      # right-center
+                [0, 0],
+                [w-1, 0],
+                [w-1, h-1],
+                [0, h-1],
+                [w//2, 0],
+                [w//2, h-1],
+                [0, h//2],
+                [w-1, h//2]
             ], dtype=np.float32)
             
-            # Define destination points on body based on clothing type
             if clothing_type == 'top':
                 dst_points = np.array([
-                    landmarks['left_shoulder'],      # top-left -> left shoulder
-                    landmarks['right_shoulder'],     # top-right -> right shoulder
-                    landmarks['right_hip'],          # bottom-right -> right hip
-                    landmarks['left_hip'],           # bottom-left -> left hip
-                    landmarks['shoulder_center'],    # top-center -> shoulder center
-                    landmarks['hip_center'],         # bottom-center -> hip center
-                    landmarks['left_elbow'],         # left-center -> left elbow
-                    landmarks['right_elbow']         # right-center -> right elbow
+                    landmarks['left_shoulder'],
+                    landmarks['right_shoulder'],
+                    landmarks['right_hip'],
+                    landmarks['left_hip'],
+                    landmarks['shoulder_center'],
+                    landmarks['hip_center'],
+                    landmarks['left_elbow'],
+                    landmarks['right_elbow']
                 ], dtype=np.float32)
                 
             elif clothing_type == 'bottom':
                 dst_points = np.array([
-                    landmarks['left_hip'],           # top-left -> left hip
-                    landmarks['right_hip'],          # top-right -> right hip
-                    landmarks['right_ankle'],        # bottom-right -> right ankle
-                    landmarks['left_ankle'],         # bottom-left -> left ankle
-                    landmarks['hip_center'],         # top-center -> hip center
+                    landmarks['left_hip'],
+                    landmarks['right_hip'],
+                    landmarks['right_ankle'],
+                    landmarks['left_ankle'],
+                    landmarks['hip_center'],
                     [(landmarks['left_ankle'][0] + landmarks['right_ankle'][0])/2, 
-                     (landmarks['left_ankle'][1] + landmarks['right_ankle'][1])/2],  # bottom-center
-                    landmarks['left_knee'],          # left-center -> left knee
-                    landmarks['right_knee']          # right-center -> right knee
+                     (landmarks['left_ankle'][1] + landmarks['right_ankle'][1])/2],
+                    landmarks['left_knee'],
+                    landmarks['right_knee']
                 ], dtype=np.float32)
             
-            # Ensure we have enough valid points
             valid_indices = []
             valid_dst_points = []
             valid_src_points = []
@@ -280,20 +406,15 @@ class VirtualTryOnSystem:
             valid_src_points = np.array(valid_src_points, dtype=np.float32)
             valid_dst_points = np.array(valid_dst_points, dtype=np.float32)
             
-            # Create TPS transformer
             tps = cv2.createThinPlateSplineShapeTransformer()
             
-            # Reshape for OpenCV
             valid_src_points = valid_src_points.reshape(1, -1, 2)
             valid_dst_points = valid_dst_points.reshape(1, -1, 2)
             
-            # Create matches
             matches = [cv2.DMatch(i, i, 0) for i in range(len(valid_indices))]
             
-            # Estimate transformation
             tps.estimateTransformation(valid_dst_points, valid_src_points, matches)
             
-            # Warp the image
             warped_img = tps.warpImage(clothing_img)
             
             return warped_img
@@ -348,6 +469,11 @@ class VirtualTryOnSystem:
                 clothing_rgb = clothing_rgb[:y_end-y_start, :x_end-x_start]
                 clothing_mask = clothing_mask[:y_end-y_start, :x_end-x_start]
             
+            # For dresses, apply additional processing to ensure proper fit
+            if clothing_type == 'dress':
+                # Create a more refined mask for dresses
+                clothing_mask = self.refine_dress_mask(clothing_mask, person_img, y_start, y_end, x_start, x_end)
+            
             # Blend clothing onto person
             result = person_img.copy().astype(np.float32)
             
@@ -363,31 +489,62 @@ class VirtualTryOnSystem:
             logger.error(f"Pose-aware clothing application failed: {str(e)}")
             return self.apply_clothing_fallback(person_img, clothing_img, clothing_type)
 
+    def refine_dress_mask(self, original_mask, person_img, y_start, y_end, x_start, x_end):
+        """Refine the mask for dresses to ensure better blending"""
+        try:
+            # Get the region of interest from the person image
+            roi = person_img[y_start:y_end, x_start:x_end]
+            
+            if len(roi.shape) == 3:
+                roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+            else:
+                roi_gray = roi
+            
+            # Apply adaptive thresholding to detect body contours
+            thresh = cv2.adaptiveThreshold(roi_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+                                          cv2.THRESH_BINARY_INV, 11, 2)
+            
+            # Find contours in the thresholded image
+            contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            
+            # Create a refined mask
+            refined_mask = original_mask.copy()
+            
+            # If we found contours, use them to refine the mask
+            if contours:
+                # Create a mask from the largest contour
+                largest_contour = max(contours, key=cv2.contourArea)
+                contour_mask = np.zeros_like(roi_gray)
+                cv2.drawContours(contour_mask, [largest_contour], -1, 255, -1)
+                
+                # Blend the original mask with the contour mask
+                refined_mask = cv2.bitwise_and(original_mask, contour_mask)
+            
+            return refined_mask
+            
+        except Exception as e:
+            logger.error(f"Dress mask refinement failed: {str(e)}")
+            return original_mask
+
     def apply_clothing_fallback(self, person_img, clothing_img, clothing_type):
         """Fallback method for when pose detection fails"""
         try:
-            # Simple center placement based on clothing type
             h, w = person_img.shape[:2]
             ch, cw = clothing_img.shape[:2]
             
             if clothing_type == 'top':
-                # Place top in upper center
                 y_start = int(h * 0.2)
                 scale = min(w * 0.6 / cw, h * 0.4 / ch)
             else:
-                # Place bottom in lower center
                 y_start = int(h * 0.5)
                 scale = min(w * 0.7 / cw, h * 0.5 / ch)
             
-            # Resize clothing
             new_width = int(cw * scale)
             new_height = int(ch * scale)
             resized_clothing = cv2.resize(clothing_img, (new_width, new_height), interpolation=cv2.INTER_LANCZOS4)
             
-            # Center horizontally
             x_start = (w - new_width) // 2
             
-            # Create mask
             if resized_clothing.shape[2] == 4:
                 mask = resized_clothing[:, :, 3] / 255.0
                 clothing_rgb = resized_clothing[:, :, :3]
@@ -395,7 +552,6 @@ class VirtualTryOnSystem:
                 mask = np.ones((new_height, new_width))
                 clothing_rgb = resized_clothing
             
-            # Blend
             result = person_img.copy().astype(np.float32)
             y_end = min(h, y_start + new_height)
             x_end = min(w, x_start + new_width)
@@ -420,12 +576,6 @@ class VirtualTryOnSystem:
             return None
 
         try:
-            # COCO keypoint indices:
-            # 5: left shoulder, 6: right shoulder
-            # 11: left hip, 12: right hip
-            # 0: nose, 15: left ankle, 16: right ankle
-            
-            # Get relevant keypoints with safety checks
             left_shoulder = keypoints[5] if np.any(keypoints[5]) else None
             right_shoulder = keypoints[6] if np.any(keypoints[6]) else None
             left_hip = keypoints[11] if np.any(keypoints[11]) else None
@@ -439,22 +589,18 @@ class VirtualTryOnSystem:
                 logger.error("Hip keypoints missing")
                 return None
             
-            # Calculate distances
             shoulder_width = np.linalg.norm(left_shoulder - right_shoulder)
             hip_width = np.linalg.norm(left_hip - right_hip)
             
-            # Add realistic constraints (in pixels)
             if shoulder_width < 20 or hip_width < 20:
                 logger.error(f"Unrealistic measurements - shoulder: {shoulder_width}, hip: {hip_width}")
                 return None
                 
-            # Calculate additional measurements
             shoulder_center = [(left_shoulder[0] + right_shoulder[0]) / 2, 
                               (left_shoulder[1] + right_shoulder[1]) / 2]
             hip_center = [(left_hip[0] + right_hip[0]) / 2, 
                          (left_hip[1] + right_hip[1]) / 2]
             
-            # Estimate torso height (shoulder to hip)
             torso_height = abs(shoulder_center[1] - hip_center[1])
             
             return {
@@ -478,9 +624,8 @@ class VirtualTryOnSystem:
                 return None
             
             mask = results[0].masks[0].data[0].cpu().numpy()
-            # Refine edges
             mask = cv2.GaussianBlur(mask, (5,5), 0)
-            return (mask > 0.5).astype(np.uint8) * 255
+            return (mask > 0.5).ast(np.uint8) * 255
         except Exception as e:
             logger.error(f"Segmentation failed: {str(e)}")
             return None
@@ -488,16 +633,13 @@ class VirtualTryOnSystem:
     def segment_clothing(self, clothing_img):
         """Segment clothing from background using thresholding"""
         try:
-            # Convert to grayscale if needed
             if len(clothing_img.shape) == 3:
                 gray = cv2.cvtColor(clothing_img, cv2.COLOR_BGR2GRAY)
             else:
                 gray = clothing_img
             
-            # Threshold to create mask (assuming white/light background)
             _, mask = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY_INV)
             
-            # Apply morphological operations to clean up the mask
             kernel = np.ones((3,3), np.uint8)
             mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
             mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
@@ -510,9 +652,17 @@ class VirtualTryOnSystem:
     def process_clothing(self, clothing_path, clothing_type, measurements):
         """Improved clothing processing with segmentation and scaling"""
         try:
+            logger.info(f"Processing clothing from path: {clothing_path}")
+            
+            # Check if file exists
+            if not os.path.exists(clothing_path):
+                raise ValueError(f"Clothing image file does not exist: {clothing_path}")
+                
             clothing_img = cv2.imread(clothing_path, cv2.IMREAD_UNCHANGED)
             if clothing_img is None:
                 raise ValueError("Could not read clothing image")
+
+            logger.info(f"Original clothing image shape: {clothing_img.shape}")
 
             # Segment clothing from background
             mask = self.segment_clothing(clothing_img)
@@ -523,11 +673,22 @@ class VirtualTryOnSystem:
             
             clothing_img[:, :, 3] = mask  # Set alpha channel
             
-            # Calculate scaling based on body measurements
-            if clothing_type == 'top':
+            # Calculate scaling based on body measurements and clothing type
+            if clothing_type == 'top' or clothing_type == 'dress':
+                # For tops and dresses, use shoulder width with margin
                 target_width = measurements['shoulder_width'] * 1.3  # 30% margin
                 scale_factor = target_width / clothing_img.shape[1]
+                
+                # For dresses, also consider length
+                if clothing_type == 'dress':
+                    # Estimate dress length based on torso height
+                    torso_height = measurements['torso_height']
+                    target_height = torso_height * 2.2  # Adjust based on typical dress length
+                    height_scale = target_height / clothing_img.shape[0]
+                    # Use the larger scale factor to ensure proper fit
+                    scale_factor = max(scale_factor, height_scale)
             else:
+                # For bottoms, use hip width with margin
                 target_width = measurements['hip_width'] * 1.2  # 20% margin
                 scale_factor = target_width / clothing_img.shape[1]
 
@@ -546,41 +707,34 @@ class VirtualTryOnSystem:
             return resized
             
         except Exception as e:
-            logger.error(f"Clothing processing failed: {str(e)}")
+            logger.error(f"Clothing processing failed: {str(e)}", exc_info=True)
             raise
-
+    
     def apply_shadows_and_highlights(self, person_img, clothing_area, position, measurements):
         """Add realistic lighting effects with body awareness"""
         try:
-            # Convert to LAB color space
             lab = cv2.cvtColor(person_img, cv2.COLOR_BGR2LAB)
             l, a, b = cv2.split(lab)
             
-            # Create shadow mask based on body shape
             kernel_size = int(min(person_img.shape[0], person_img.shape[1]) * 0.05)
             kernel_size = kernel_size + 1 if kernel_size % 2 == 0 else kernel_size
             kernel = np.ones((kernel_size, kernel_size), np.float32)/(kernel_size*kernel_size)
             
             shadow_mask = cv2.filter2D(clothing_area.astype(np.float32), -1, kernel) / 255.0
             
-            # Apply shadows to lightness channel
             y1, y2 = position[1], position[1] + clothing_area.shape[0]
             x1, x2 = position[0], position[0] + clothing_area.shape[1]
             
-            # Ensure we don't exceed image bounds
             y1, y2 = max(0, y1), min(person_img.shape[0], y2)
             x1, x2 = max(0, x1), min(person_img.shape[1], x2)
             
-            # Adjust mask size if needed
             shadow_mask = shadow_mask[:y2-y1, :x2-x1]
             
-            # Apply shadow effect
             l_roi = l[y1:y2, x1:x2]
             l_roi[:] = np.clip(l_roi * (1 - shadow_mask * 0.3), 0, 255)
             
-            # Merge back and convert
             lab = cv2.merge((l,a,b))
-            return cv2.cvtColor(lab, cv2.CCOLOR_LAB2BGR)
+            return cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
             
         except Exception as e:
             logger.error(f"Shadow effect failed: {str(e)}")
@@ -589,7 +743,6 @@ class VirtualTryOnSystem:
     def add_fabric_texture(self, clothing_img):
         """Add realistic fabric texture with noise"""
         try:
-            # Generate more realistic Perlin noise
             height, width = clothing_img.shape[:2]
             x = np.linspace(0, 5, width)
             y = np.linspace(0, 5, height)
@@ -598,7 +751,6 @@ class VirtualTryOnSystem:
             noise = np.sin(xv) * np.cos(yv) * 10
             noise = noise.astype(np.uint8)
             
-            # Apply to each channel except alpha
             for c in range(3):
                 clothing_img[:,:,c] = cv2.addWeighted(clothing_img[:,:,c], 0.9, noise, 0.1, 0)
             return clothing_img
@@ -609,14 +761,12 @@ class VirtualTryOnSystem:
     def blend_images(self, person_img, clothing_img, clothing_type, measurements, segmentation_mask=None):
         """Updated blend_images method using pose-aware approach"""
         try:
-            # Use pose-aware clothing application
             result_img = self.apply_clothing_with_pose(person_img, clothing_img, clothing_type)
             
-            # Apply additional effects if needed
             result_img = self.apply_shadows_and_highlights(
                 result_img, 
                 clothing_img[:, :, 3] if clothing_img.shape[2] == 4 else None,
-                (0, 0),  # Position is now handled in apply_clothing_with_pose
+                (0, 0),
                 measurements
             )
             
@@ -629,22 +779,18 @@ class VirtualTryOnSystem:
     def save_result(self, image):
         """Enhanced result saving with validation and backup"""
         try:
-            # Validate input image
             if image is None:
                 raise ValueError("Cannot save None image")
             if len(image.shape) != 3 or image.shape[2] != 3:
                 raise ValueError(f"Image must be 3-channel BGR. Got shape: {image.shape}")
 
-            # Create directories if they don't exist
             os.makedirs(self.result_dir, exist_ok=True)
             
-            # Generate filename with timestamp and random suffix to prevent collisions
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             random_suffix = str(random.randint(1000, 9999))
             filename = f"result_{timestamp}_{random_suffix}.jpg"
             result_path = os.path.join(self.result_dir, filename)
             
-            # Save with high quality and validate
             save_success = cv2.imwrite(
                 result_path,
                 image,
@@ -652,7 +798,6 @@ class VirtualTryOnSystem:
             )
             
             if not save_success:
-                # Try saving with different parameters if first attempt fails
                 logger.warning("First save attempt failed, trying alternative method")
                 temp_path = os.path.join(self.result_dir, f"temp_{filename}")
                 cv2.imwrite(temp_path, image)
@@ -663,7 +808,6 @@ class VirtualTryOnSystem:
             if not save_success:
                 raise ValueError("All save attempts failed")
                 
-            # Verify the saved file
             if not os.path.exists(result_path):
                 raise ValueError("File was not created")
             if os.path.getsize(result_path) == 0:
@@ -676,7 +820,6 @@ class VirtualTryOnSystem:
         except Exception as e:
             logger.error(f"Result saving failed: {str(e)}", exc_info=True)
             
-            # Attempt to save to backup location
             try:
                 backup_dir = os.path.join(self.media_root, 'backup_results')
                 os.makedirs(backup_dir, exist_ok=True)
@@ -775,163 +918,137 @@ def upload_clothing(request):
         }, status=500)
 
 
+
 @csrf_exempt
 def static_tryon(request):
-    """Enhanced virtual try-on endpoint with detailed error reporting and processing"""
+    """Enhanced virtual try-on endpoint with detailed error reporting"""
     debug_data = {
         'timestamp': datetime.now().isoformat(),
         'received_files': bool(request.FILES),
-        'received_data': dict(request.POST)
     }
     
     try:
         # Validate request method
         if request.method != 'POST':
-            debug_data['error'] = 'Invalid method'
-            logger.error(f"Invalid method: {request.method}")
             return JsonResponse({'error': 'Method not allowed'}, status=405)
 
         # Validate inputs
         if not request.FILES.get('image'):
-            debug_data['error'] = 'No image file provided'
-            logger.error("No image file provided in request")
             return JsonResponse({'error': 'No image provided'}, status=400)
         
         image_file = request.FILES['image']
-        debug_data['image_file'] = {
-            'name': image_file.name,
-            'size': image_file.size,
-            'type': image_file.content_type
-        }
-
         clothing_id = request.POST.get('clothing_id')
+        
         if not clothing_id:
-            debug_data['error'] = 'Missing clothing_id'
-            logger.error("No clothing_id provided in request")
             return JsonResponse({'error': 'Clothing ID required'}, status=400)
-        debug_data['clothing_id'] = clothing_id
 
         # Get clothing item
         try:
             clothing = ClothingItem.objects.get(id=clothing_id)
             if not clothing.image:
-                debug_data['error'] = 'Clothing image missing'
-                logger.error(f"Clothing item {clothing_id} has no image")
                 return JsonResponse({'error': 'Clothing image missing'}, status=400)
-            
-            debug_data['clothing'] = {
-                'name': clothing.name,
-                'category': clothing.category,
-                'image_path': clothing.image.path if clothing.image else None
-            }
         except ObjectDoesNotExist:
-            debug_data['error'] = 'Clothing not found'
-            logger.error(f"Clothing item {clothing_id} not found")
             return JsonResponse({'error': 'Clothing not found'}, status=404)
 
         # Process person image
-        try:
-            person_img = tryon_system.process_image(image_file)
-            if person_img is None:
-                debug_data['error'] = 'Person image processing failed'
-                logger.error("Person image processing returned None")
-                return JsonResponse({'error': 'Image processing failed'}, status=400)
-        except Exception as e:
-            debug_data['error'] = f"Image processing failed: {str(e)}"
-            logger.error(f"Image processing failed: {str(e)}", exc_info=True)
+        person_img = tryon_system.process_image(image_file)
+        if person_img is None:
             return JsonResponse({'error': 'Image processing failed'}, status=400)
 
         # Determine clothing type
-        clothing_type = 'top' if clothing.category in ['top', 'shirt', 't-shirt'] else 'bottom'
-        debug_data['clothing_type'] = clothing_type
+        clothing_type = 'top' if clothing.category in ['top', 'shirt', 't-shirt', 'dress'] else 'bottom'
         
         # Get body measurements
         measurements = tryon_system.get_body_measurements(person_img)
         if not measurements:
-            debug_data['error'] = 'Body measurements detection failed'
-            logger.error("Could not detect body measurements")
             return JsonResponse({'error': 'Could not detect body pose'}, status=400)
-        debug_data['measurements'] = measurements
-
-        # Get body segmentation
-        segmentation_mask = tryon_system.get_body_segmentation(person_img)
-        if segmentation_mask is not None:
-            debug_data['segmentation_mask_size'] = f"{segmentation_mask.shape[0]}x{segmentation_mask.shape[1]}"
-            debug_data['segmentation_mask_pixels'] = int(np.sum(segmentation_mask > 0))
-        else:
-            debug_data['warning'] = 'No segmentation mask'
-            logger.warning("Could not get body segmentation mask")
 
         # Process clothing image
-        try:
-            clothing_img = tryon_system.process_clothing(
-                clothing.image.path,
-                clothing_type,
-                measurements
-            )
-            if clothing_img is None:
-                debug_data['error'] = 'Clothing processing failed'
-                logger.error("Clothing image processing returned None")
-                return JsonResponse({'error': 'Clothing processing failed'}, status=400)
-        except Exception as e:
-            debug_data['error'] = f"Clothing processing failed: {str(e)}"
-            logger.error(f"Clothing processing failed: {str(e)}", exc_info=True)
+        clothing_img = tryon_system.process_clothing(
+            clothing.image.path,
+            clothing_type,
+            measurements
+        )
+        if clothing_img is None:
             return JsonResponse({'error': 'Clothing processing failed'}, status=400)
+
+        # Use fallback method (more reliable)
+        result_img = tryon_system.apply_clothing_fallback(
+            person_img, 
+            clothing_img, 
+            clothing_type
+        )
         
-        # Perform blending
-        try:
-            result_img = tryon_system.blend_images(
-                person_img,
-                clothing_img,
-                clothing_type,
-                measurements,
-                segmentation_mask
-            )
-            if result_img is None:
-                debug_data['error'] = 'Blending failed'
-                logger.error("Blending returned None")
-                return JsonResponse({'error': 'Outfit blending failed'}, status=400)
-        except Exception as e:
-            debug_data['error'] = f"Blending failed: {str(e)}"
-            logger.error(f"Blending failed: {str(e)}", exc_info=True)
+        if result_img is None:
             return JsonResponse({'error': 'Outfit blending failed'}, status=400)
 
         # Save result
-        try:
-            result_url = tryon_system.save_result(result_img)
-            debug_data['result_url'] = result_url
-            debug_data['success'] = True
-            
-            return JsonResponse({
-                'status': 'success',
-                'result_image': request.build_absolute_uri(result_url),
-                'debug_id': debug_data['timestamp']  # Include debug ID in success case
-            })
-        except Exception as e:
-            debug_data['error'] = f"Result saving failed: {str(e)}"
-            logger.error(f"Result saving failed: {str(e)}")
-            return JsonResponse({'error': 'Failed to save result'}, status=500)
+        result_url = tryon_system.save_result(result_img)
+        
+        return JsonResponse({
+            'status': 'success',
+            'result_image': request.build_absolute_uri(result_url)
+        })
 
     except Exception as e:
-        debug_data['error'] = f"Unexpected error: {str(e)}"
         logger.error(f"Virtual try-on failed: {str(e)}", exc_info=True)
         return JsonResponse({
             'error': 'Internal server error',
-            'details': str(e),
-            'debug_id': debug_data['timestamp']
+            'details': str(e)
         }, status=500)
-            
-    finally:
-        # Save debug information
-        try:
-            debug_dir = os.path.join(settings.MEDIA_ROOT, 'debug_logs')
-            os.makedirs(debug_dir, exist_ok=True)
-            debug_file = os.path.join(debug_dir, f"{debug_data['timestamp'].replace(':', '-')}.json")
-            with open(debug_file, 'w') as f:
-                json.dump(debug_data, f, indent=2)
-        except Exception as e:
-            logger.error(f"Failed to save debug data: {str(e)}")
     
+@csrf_exempt
+def debug_clothing_processing(request):
+    """Endpoint to debug clothing processing"""
+    if request.method == 'POST' and request.FILES.get('image'):
+        try:
+            # Process clothing image
+            clothing_img = tryon_system.process_image(request.FILES['image'])
+            
+            # Segment clothing
+            mask = tryon_system.segment_clothing(clothing_img)
+            
+            # Convert to base64 for response
+            _, buffer = cv2.imencode('.png', mask)
+            mask_base64 = base64.b64encode(buffer).decode('utf-8')
+            
+            return JsonResponse({
+                'mask': mask_base64,
+                'success': True
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e), 'success': False}, status=400)
+    return JsonResponse({'error': 'Invalid request', 'success': False}, status=400)
+
+@csrf_exempt
+def debug_pose_detection(request):
+    """Endpoint to debug pose detection"""
+    if request.method == 'POST' and request.FILES.get('image'):
+        try:
+            img = tryon_system.process_image(request.FILES['image'])
+            landmarks = tryon_system.get_body_landmarks(img)
+            
+            # Draw landmarks on image
+            debug_img = img.copy()
+            if landmarks:
+                for name, point in landmarks.items():
+                    if point is not None and len(point) == 2:
+                        cv2.circle(debug_img, (int(point[0]), int(point[1])), 5, (0, 255, 0), -1)
+                        cv2.putText(debug_img, name, (int(point[0]) + 5, int(point[1])), 
+                                   cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)
+            
+            # Convert to base64 for response
+            _, buffer = cv2.imencode('.png', debug_img)
+            img_base64 = base64.b64encode(buffer).decode('utf-8')
+            
+            return JsonResponse({
+                'image': img_base64,
+                'success': True
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e), 'success': False}, status=400)
+    return JsonResponse({'error': 'Invalid request', 'success': False}, status=400)
+
 def get_clothing(request):
     """API endpoint for clothing items with optimized query"""
     clothes = get_clothing_items()
@@ -986,27 +1103,37 @@ def debug_tryon(request):
     """Endpoint to return debug images"""
     if request.method == 'POST':
         try:
+            if not request.FILES.get('image'):
+                return JsonResponse({'error': 'No image provided'}, status=400)
+            
             img = tryon_system.process_image(request.FILES['image'])
-            measurements = tryon_system.get_body_measurements(img)
+            if img is None:
+                return JsonResponse({'error': 'Image processing failed'}, status=400)
+            
+            # Get keypoints for visualization
+            keypoints = tryon_system._get_keypoints(img)
             
             # Create debug visualization
             debug_img = img.copy()
-            keypoints = tryon_system._get_keypoints(img)
-            print("Keypoints:", keypoints)  # Check terminal
-            print("Measurements:", measurements)  # Shoulder/hip widths > 50px
-       
             
             if keypoints is not None:
                 # Draw keypoints
-                for i, (x,y) in enumerate(keypoints):
-                    cv2.circle(debug_img, (int(x), int(y)), 5, (0,255,0), -1)
-                    cv2.putText(debug_img, str(i), (int(x), int(y)), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+                for i, point in enumerate(keypoints):
+                    if point is not None and len(point) == 2:
+                        x, y = int(point[0]), int(point[1])
+                        cv2.circle(debug_img, (x, y), 5, (0, 255, 0), -1)
+                        cv2.putText(debug_img, str(i), (x + 5, y), 
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)
             
             # Convert to JPEG
-            _, buf = cv2.imencode('.jpg', debug_img)
+            success, buf = cv2.imencode('.jpg', debug_img)
+            if not success:
+                return JsonResponse({'error': 'Image encoding failed'}, status=500)
+                
             return HttpResponse(buf.tobytes(), content_type='image/jpeg')
             
         except Exception as e:
+            logger.error(f"Debug error: {str(e)}")
             return JsonResponse({'error': str(e)}, status=400)
+    
     return JsonResponse({'error': 'POST required'}, status=400)

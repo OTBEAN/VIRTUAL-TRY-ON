@@ -8,6 +8,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Base directory of the project
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Security settings
 SECRET_KEY = "django-insecure-zii1%bg!^)w(&elkgy_ubo71098t%2fp@+89s&zv@327^wl)87"
 DEBUG = True
@@ -77,7 +80,7 @@ WSGI_APPLICATION = "bodyapp.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 

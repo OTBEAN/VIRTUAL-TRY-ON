@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-08-27T03:47:54.955086",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "9"
+    ],
+    "advanced_mode": [
+      "true"
+    ]
+  },
+  "success": true,
+  "blending_method": "advanced",
+  "image_file": {
+    "name": "10549_00.jpg",
+    "size": 132729,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "9",
+  "advanced_mode": true,
+  "clothing": {
+    "name": "sdknf",
+    "category": "top",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothes\\11791_00.jpg"
+  },
+  "clothing_type": "top",
+  "measurements": {
+    "shoulder_width": 310,
+    "hip_width": 215,
+    "shoulder_height": 332,
+    "shoulder_center": 400,
+    "hip_height": 797,
+    "hip_center": 380,
+    "torso_height": 465
+  },
+  "segmentation_mask_size": "640x480",
+  "segmentation_mask_pixels": 155227,
+  "result_url": "/media/tryon_results\\result_20250827_034800_4902.jpg",
+  "blending_attempts": [
+    "advanced"
+  ]
+}

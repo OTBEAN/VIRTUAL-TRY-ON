@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-08-29T00:58:21.136609",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "27"
+    ],
+    "advanced_mode": [
+      "true"
+    ]
+  },
+  "image_file": {
+    "name": "10549_00.jpg",
+    "size": 132729,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "27",
+  "advanced_mode": true,
+  "clothing": {
+    "name": "wewe",
+    "category": "top",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothing\\20250806_012839_11791_00.jpg"
+  },
+  "clothing_type": "top",
+  "error": "Unexpected error: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'"
+}

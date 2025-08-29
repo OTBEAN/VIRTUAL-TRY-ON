@@ -7,6 +7,8 @@ from django.views.generic.base import RedirectView
 # Define urlpatterns list
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    
   
     path('', include('detector.urls')),  # Make sure 'detector' is your app name
         # Handle Chrome DevTools requests

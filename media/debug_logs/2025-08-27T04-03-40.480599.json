@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-08-27T04:03:40.480599",
+  "received_files": true,
+  "received_data": {
+    "clothing_id": [
+      "25"
+    ],
+    "advanced_mode": [
+      "false"
+    ]
+  },
+  "image_file": {
+    "name": "07573_00.jpg",
+    "size": 107021,
+    "type": "image/jpeg"
+  },
+  "clothing_id": "25",
+  "advanced_mode": false,
+  "clothing": {
+    "name": "asfsad",
+    "category": "top",
+    "image_path": "C:\\Users\\lenovo\\Desktop\\office project\\bodyapp\\media\\clothing\\20250805_023715_11028_00.jpg"
+  },
+  "clothing_type": "top",
+  "error": "Unexpected error: 'VirtualTryOnSystem' object has no attribute 'get_body_measurements'"
+}
